@@ -166,8 +166,8 @@
             position: relative;
             z-index: 2;
             max-width: 800px;
-            padding: 30px;
-            background: rgba(10, 10, 26, 0.8);
+            padding: 20px;
+            background: rgba(10, 10, 26, 0.7);
             border-radius: 15px;
             backdrop-filter: blur(5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -182,14 +182,13 @@
             background-clip: text;
             color: transparent;
             letter-spacing: -0.5px;
-            line-height: 1.2;
         }
         
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 2.5rem;
             max-width: 700px;
-            color: rgba(255, 255, 255, 0.95);
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.7;
         }
         
@@ -251,7 +250,6 @@
             padding: 0 20px;
             position: relative;
             z-index: 1;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
         
         .section-title::after {
@@ -306,7 +304,7 @@
         }
         
         .chart-header {
-            background: rgba(30, 144, 255, 0.2);
+            background: rgba(30, 144, 255, 0.15);
             color: var(--light);
             padding: 1.5rem;
             text-align: center;
@@ -322,7 +320,6 @@
             margin: 0;
             flex: 1;
             text-align: left;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
         
         .chart-header i {
@@ -333,6 +330,18 @@
         
         .chart-content {
             padding: 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+        
+        .chart-card.expanded .chart-content {
+            max-height: 1000px;
+            padding: 1.5rem;
+        }
+        
+        .chart-card.expanded .chart-header i {
+            transform: rotate(180deg);
         }
         
         .chart-list {
@@ -362,7 +371,6 @@
             width: 30px;
             text-align: center;
             font-size: 1.1rem;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
         
         .song-info {
@@ -373,13 +381,11 @@
         .song-title {
             font-weight: 600;
             font-size: 1.05rem;
-            color: var(--light);
-            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
         
         .artist {
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.85);
+            color: rgba(255,255,255,0.7);
             margin-top: 4px;
         }
         
@@ -494,11 +500,10 @@
         }
         
         .footer-column a {
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.8);
             text-decoration: none;
             transition: color 0.3s, padding-left 0.3s;
             display: block;
-            font-weight: 500;
         }
         
         .footer-column a:hover {
@@ -535,7 +540,7 @@
             padding-top: 2.5rem;
             border-top: 1px solid rgba(255,255,255,0.1);
             font-size: 0.95rem;
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.7);
             position: relative;
             z-index: 2;
         }
@@ -544,7 +549,6 @@
             color: var(--primary);
             text-decoration: none;
             transition: all 0.3s;
-            font-weight: 600;
         }
         
         .copyright a:hover {
@@ -586,7 +590,7 @@
             }
             
             .hero-content {
-                padding: 20px;
+                padding: 15px;
                 margin: 0 15px;
             }
             
@@ -712,8 +716,9 @@
             <!-- Chart 1 -->
             <div class="chart-card" data-genre="pop">
                 <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header">
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top 50 Pop Francophone globale</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -737,8 +742,9 @@
             <!-- Chart 2 -->
             <div class="chart-card" data-genre="new">
                 <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header">
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top 30 Nouvelle Génération</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -762,8 +768,9 @@
             <!-- Chart 3 -->
             <div class="chart-card" data-genre="streaming">
                 <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1619983081563-430f63602b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header">
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top Streaming Pop Francophone</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -787,8 +794,9 @@
             <!-- Chart 4 -->
             <div class="chart-card" data-genre="rap">
                 <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header">
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top Rap 10 Francophone globale</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -809,8 +817,9 @@
             <!-- Chart 5 -->
             <div class="chart-card" data-genre="rnb">
                 <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1487180144351-b8472da7d491?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header">
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top RnB 10 Francophone globale</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -831,8 +840,9 @@
             <!-- Chart 6 -->
             <div class="chart-card" data-genre="hiphop">
                 <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header">
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top 50 Hip-Hop/RnB Francophone</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -907,6 +917,21 @@
     </footer>
 
     <script>
+        // Fonction pour déplier/replier les classements
+        function toggleChart(header) {
+            const card = header.parentElement;
+            card.classList.toggle('expanded');
+            
+            // Fermer les autres cartes si on ouvre celle-ci
+            if (card.classList.contains('expanded')) {
+                document.querySelectorAll('.chart-card').forEach(otherCard => {
+                    if (otherCard !== card && otherCard.classList.contains('expanded')) {
+                        otherCard.classList.remove('expanded');
+                    }
+                });
+            }
+        }
+        
         // Recherche fonctionnelle
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
