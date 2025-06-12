@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gramcharts - Votre source de classements musicaux professionnels</title>
+    <title>Gramcharts - Classements musicaux professionnels</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -166,6 +166,11 @@
             position: relative;
             z-index: 2;
             max-width: 800px;
+            padding: 20px;
+            background: rgba(10, 10, 26, 0.7);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         
         .hero h1 {
@@ -176,6 +181,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: -0.5px;
         }
         
         .hero p {
@@ -183,6 +189,7 @@
             margin-bottom: 2.5rem;
             max-width: 700px;
             color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
         }
         
         .btn {
@@ -582,6 +589,11 @@
                 font-size: 2.8rem;
             }
             
+            .hero-content {
+                padding: 15px;
+                margin: 0 15px;
+            }
+            
             .search-bar {
                 width: 200px;
             }
@@ -663,11 +675,11 @@
         </div>
         <nav id="mainNav">
             <ul>
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Classements</a></li>
-                <li><a href="#">Nouveautés</a></li>
-                <li><a href="#">Artistes</a></li>
-                <li><a href="#">À propos</a></li>
+                <li><a href="accueil.html">Accueil</a></li>
+                <li><a href="classements.html">Classements</a></li>
+                <li><a href="nouveautes.html">Nouveautés</a></li>
+                <li><a href="artistes.html">Artistes</a></li>
+                <li><a href="apropos.html">À propos</a></li>
             </ul>
         </nav>
         <div class="search-bar">
@@ -684,7 +696,7 @@
         <div class="hero-content">
             <h1>Découvrez les classements musicaux du moment</h1>
             <p>Gramcharts vous propose les charts les plus populaires de la musique francophone. Restez à jour avec les hits du moment et découvrez les nouvelles tendances.</p>
-            <a href="#" class="btn">Voir les classements</a>
+            <a href="classements.html" class="btn">Voir les classements</a>
         </div>
     </section>
 
@@ -710,7 +722,7 @@
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Monaco</div><div class="artist">Bad Bunny</div></div></li>
+                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Toi</div><div class="artist">Mč Exau</div></div></li>
                         <li><span class="position">2</span> <div class="song-info"><div class="song-title">Flowers</div><div class="artist">Miley Cyrus</div></div></li>
                         <li><span class="position">3</span> <div class="song-info"><div class="song-title">Kill Bill</div><div class="artist">SZA</div></div></li>
                         <li><span class="position">4</span> <div class="song-info"><div class="song-title">Calm Down</div><div class="artist">Rema & Selena Gomez</div></div></li>
@@ -722,7 +734,7 @@
                         <li><span class="position">10</span> <div class="song-info"><div class="song-title">I'm Good (Blue)</div><div class="artist">David Guetta & Bebe Rexha</div></div></li>
                     </ul>
                     <div class="premium-banner">
-                        Pour découvrir le classement complet (Top 11 à 50), <a href="#">abonnez-vous sur Patreon</a>
+                        Pour découvrir le classement complet (Top 11 à 50), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
                     </div>
                 </div>
             </div>
@@ -736,7 +748,7 @@
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Dance The Night</div><div class="artist">Dua Lipa</div></div></li>
+                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Bizarre</div><div class="artist">Mč Exau</div></div></li>
                         <li><span class="position">2</span> <div class="song-info"><div class="song-title">TQG</div><div class="artist">KAROL G, Shakira</div></div></li>
                         <li><span class="position">3</span> <div class="song-info"><div class="song-title">Cupid</div><div class="artist">FIFTY FIFTY</div></div></li>
                         <li><span class="position">4</span> <div class="song-info"><div class="song-title">Boy's a liar Pt. 2</div><div class="artist">PinkPantheress, Ice Spice</div></div></li>
@@ -748,7 +760,7 @@
                         <li><span class="position">10</span> <div class="song-info"><div class="song-title">What It Is (Solo Version)</div><div class="artist">Doechii</div></div></li>
                     </ul>
                     <div class="premium-banner">
-                        Pour découvrir le classement complet (Top 11 à 30), <a href="#">abonnez-vous sur Patreon</a>
+                        Pour découvrir le classement complet (Top 11 à 30), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
                     </div>
                 </div>
             </div>
@@ -762,7 +774,7 @@
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Seven</div><div class="artist">Jung Kook ft. Latto</div></div></li>
+                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Quartier</div><div class="artist">Mč Exau</div></div></li>
                         <li><span class="position">2</span> <div class="song-info"><div class="song-title">Daylight</div><div class="artist">David Kushner</div></div></li>
                         <li><span class="position">3</span> <div class="song-info"><div class="song-title">Last Night</div><div class="artist">Morgan Wallen</div></div></li>
                         <li><span class="position">4</span> <div class="song-info"><div class="song-title">Fast Car</div><div class="artist">Luke Combs</div></div></li>
@@ -774,7 +786,7 @@
                         <li><span class="position">10</span> <div class="song-info"><div class="song-title">WHERE SHE GOES</div><div class="artist">Bad Bunny</div></div></li>
                     </ul>
                     <div class="premium-banner">
-                        Pour découvrir le classement complet (Top 11 à 50), <a href="#">abonnez-vous sur Patreon</a>
+                        Pour découvrir le classement complet (Top 11 à 50), <a href="https://www.patreon.com/gramcharts" target="_blank">Decouvrir la suite</a>
                     </div>
                 </div>
             </div>
@@ -846,7 +858,7 @@
                         <li><span class="position">10</span> <div class="song-info"><div class="song-title">Dancin' In The Country</div><div class="artist">Tyler Hubbard</div></div></li>
                     </ul>
                     <div class="premium-banner">
-                        Pour découvrir le classement complet (Top 11 à 50), <a href="#">abonnez-vous sur Patreon</a>
+                        Pour découvrir le classement complet (Top 11 à 50), <a href="https://www.patreon.com/gramcharts" target="_blank">Decouvrir la suite</a>
                     </div>
                 </div>
             </div>
@@ -870,37 +882,37 @@
             <div class="footer-column">
                 <h3>CLASSEMENTS</h3>
                 <ul>
-                    <li><a href="#">Pop Francophone</a></li>
-                    <li><a href="#">Nouvelle Génération</a></li>
-                    <li><a href="#">Streaming Pop</a></li>
-                    <li><a href="#">Rap Francophone</a></li>
-                    <li><a href="#">RnB Francophone</a></li>
-                    <li><a href="#">Hip-Hop/RnB</a></li>
+                    <li><a href="classements.html">Pop Francophone</a></li>
+                    <li><a href="classements.html">Nouvelle Génération</a></li>
+                    <li><a href="classements.html">Streaming Pop</a></li>
+                    <li><a href="classements.html">Rap Francophone</a></li>
+                    <li><a href="classements.html">RnB Francophone</a></li>
+                    <li><a href="classements.html">Hip-Hop/RnB</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>À PROPOS</h3>
                 <ul>
-                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/">Notre équipe</a></li>
-                    <li><a href="#">Méthodologie</a></li>
-                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/">Partenaires</a></li>
-                    <li><a href="#">Carrières</a></li>
-                    <li><a href="wa.me/237699853665">Contact</a></li>
+                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">Notre équipe</a></li>
+                    <li><a href="apropos.html">Méthodologie</a></li>
+                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">Partenaires</a></li>
+                    <li><a href="apropos.html">Carrières</a></li>
+                    <li><a href="apropos.html">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>SUPPORT</h3>
                 <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Devenir Premium</a></li>
-                    <li><a href="#">Patreon</a></li>
-                    <li><a href="#">Conditions d'utilisation</a></li>
-                    <li><a href="#">Politique de confidentialité</a></li>
+                    <li><a href="support.html">FAQ</a></li>
+                    <li><a href="support.html">Devenir Premium</a></li>
+                    <li><a href="https://www.patreon.com/gramcharts" target="_blank">Patreon</a></li>
+                    <li><a href="support.html">Conditions d'utilisation</a></li>
+                    <li><a href="support.html">Politique de confidentialité</a></li>
                 </ul>
             </div>
         </div>
         <div class="copyright">
-            &copy; 2023 Gramcharts. Tous droits réservés. Les classements sont mis à jour chaque semaine. Site propulsé par <a href="https://social-boost-horizon-new-sbh.vercel.app/">SOCIAL BOOST HORIZON</a>
+            &copy; 2023 Gramcharts. Tous droits réservés. Les classements sont mis à jour chaque semaine. Site propulsé par <a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">SOCIAL BOOST HORIZON</a>
         </div>
     </footer>
 
@@ -983,11 +995,12 @@
             }
         });
         
-        // Menu mobile
+        // Menu mobile amélioré
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
         
-        mobileMenuBtn.addEventListener('click', function() {
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Empêcher la propagation de l'événement
             mainNav.classList.toggle('active');
             this.innerHTML = mainNav.classList.contains('active') ? 
                 '<i class="fas fa-times"></i>' : 
@@ -1000,6 +1013,14 @@
                 mainNav.classList.remove('active');
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             }
+        });
+        
+        // Fermer le menu si on clique sur un lien
+        document.querySelectorAll('#mainNav a').forEach(link => {
+            link.addEventListener('click', function() {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
         });
         
         // Animation des cartes au défilement
