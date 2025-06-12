@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gramcharts - Votre source de classements musicaux</title>
+    <title>Gramcharts - Votre source de classements musicaux professionnels</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #FFD700; /* Jaune */
             --secondary: #1E90FF; /* Bleu */
+            --accent: #FF6B6B; /* Rouge */
             --dark: #000000; /* Noir */
             --light: #FFFFFF; /* Blanc */
             --gray: #F5F5F5;
             --dark-gray: #333333;
+            --background: #0A0A1A;
+            --card-bg: #121230;
         }
         
         * {
@@ -23,14 +26,15 @@
         }
         
         body {
-            background-color: var(--light);
-            color: var(--dark);
+            background-color: var(--background);
+            color: var(--light);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         /* Header Styles */
         header {
-            background-color: var(--dark);
+            background-color: rgba(10, 10, 26, 0.95);
             color: var(--light);
             padding: 1rem 5%;
             display: flex;
@@ -39,7 +43,9 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
         }
         
         .logo {
@@ -65,10 +71,27 @@
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
         }
         
         nav a:hover {
             color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
         }
         
         .search-bar {
@@ -78,6 +101,13 @@
             border-radius: 30px;
             padding: 0.5rem 1rem;
             width: 300px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        
+        .search-bar:focus-within {
+            border-color: var(--primary);
+            background: rgba(30, 144, 255, 0.1);
         }
         
         .search-bar input {
@@ -87,18 +117,30 @@
             width: 100%;
             padding: 0.5rem;
             outline: none;
+            font-size: 1rem;
         }
         
         .search-bar i {
             color: var(--light);
+            margin-right: 8px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
+            background: linear-gradient(135deg, rgba(30, 30, 60, 0.9), rgba(10, 10, 26, 0.95)), 
+                         url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
             background-size: cover;
             background-position: center;
-            height: 400px;
+            height: 500px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -106,43 +148,86 @@
             text-align: center;
             color: var(--light);
             padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 0%, var(--background) 150%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
         }
         
         .hero h1 {
             font-size: 3.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            background: linear-gradient(to right, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
         .hero p {
             font-size: 1.2rem;
+            margin-bottom: 2.5rem;
             max-width: 700px;
-            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .btn {
-            background-color: var(--primary);
+            background: linear-gradient(45deg, var(--primary), var(--accent));
             color: var(--dark);
-            padding: 12px 30px;
+            padding: 14px 35px;
             border: none;
             border-radius: 30px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            z-index: -1;
+            transition: opacity 0.3s;
+            opacity: 0;
         }
         
         .btn:hover {
-            background-color: var(--secondary);
-            color: var(--light);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
+        }
+        
+        .btn:hover::before {
+            opacity: 1;
         }
         
         /* Charts Section */
         .charts-section {
-            padding: 4rem 5%;
+            padding: 5rem 5%;
         }
         
         .section-title {
@@ -153,9 +238,8 @@
         
         .section-title h2 {
             font-size: 2.5rem;
-            color: var(--dark);
+            color: var(--light);
             display: inline-block;
-            background: var(--light);
             padding: 0 20px;
             position: relative;
             z-index: 1;
@@ -165,46 +249,92 @@
             content: '';
             position: absolute;
             top: 50%;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: var(--primary);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
             z-index: 0;
         }
         
         .charts-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
         }
         
         .chart-card {
-            background-color: var(--light);
-            border-radius: 10px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 215, 0, 0.1);
         }
         
         .chart-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        .chart-illustration {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .chart-illustration::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to top, var(--card-bg), transparent);
         }
         
         .chart-header {
-            background-color: var(--secondary);
+            background: rgba(30, 144, 255, 0.15);
             color: var(--light);
             padding: 1.5rem;
             text-align: center;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         
         .chart-header h3 {
             font-size: 1.4rem;
             margin: 0;
+            flex: 1;
+            text-align: left;
+        }
+        
+        .chart-header i {
+            transition: transform 0.3s;
+            font-size: 1.2rem;
+            color: var(--primary);
         }
         
         .chart-content {
             padding: 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+        }
+        
+        .chart-card.expanded .chart-content {
+            max-height: 1000px;
+            padding: 1.5rem;
+        }
+        
+        .chart-card.expanded .chart-header i {
+            transform: rotate(180deg);
         }
         
         .chart-list {
@@ -212,10 +342,16 @@
         }
         
         .chart-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--gray);
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        
+        .chart-list li:hover {
+            background: rgba(255,255,255,0.05);
         }
         
         .chart-list li:last-child {
@@ -224,61 +360,128 @@
         
         .position {
             font-weight: bold;
-            color: var(--secondary);
+            color: var(--primary);
             width: 30px;
+            text-align: center;
+            font-size: 1.1rem;
         }
         
         .song-info {
             flex: 1;
+            padding: 0 15px;
         }
         
         .song-title {
             font-weight: 600;
+            font-size: 1.05rem;
         }
         
         .artist {
             font-size: 0.9rem;
-            color: var(--dark-gray);
+            color: rgba(255,255,255,0.7);
+            margin-top: 4px;
         }
         
         .premium-banner {
-            background-color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--accent));
             color: var(--dark);
             padding: 1rem;
             text-align: center;
-            margin-top: 1rem;
-            border-radius: 5px;
+            margin-top: 1.5rem;
+            border-radius: 8px;
             font-weight: bold;
+            position: relative;
+            overflow: hidden;
         }
         
         .premium-banner a {
-            color: var(--secondary);
+            color: var(--dark);
             text-decoration: none;
             font-weight: bold;
+            position: relative;
+            z-index: 2;
         }
         
-        .premium-banner a:hover {
-            text-decoration: underline;
+        .premium-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+        
+        .premium-banner:hover::after {
+            transform: translateX(0);
+        }
+        
+        /* Search Results */
+        .search-results {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .search-results.active {
+            display: block;
+        }
+        
+        .search-results h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
         
         /* Footer */
         footer {
-            background-color: var(--dark);
+            background: linear-gradient(to top, rgba(10, 10, 26, 0.95), var(--background));
             color: var(--light);
-            padding: 4rem 5% 2rem;
+            padding: 5rem 5% 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
         }
         
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
         }
         
         .footer-column h3 {
             color: var(--primary);
             margin-bottom: 1.5rem;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
         }
         
         .footer-column ul {
@@ -286,23 +489,25 @@
         }
         
         .footer-column ul li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
         
         .footer-column a {
-            color: var(--light);
+            color: rgba(255,255,255,0.8);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.3s, padding-left 0.3s;
+            display: block;
         }
         
         .footer-column a:hover {
             color: var(--primary);
+            padding-left: 5px;
         }
         
         .social-icons {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
         
         .social-icons a {
@@ -311,46 +516,88 @@
             justify-content: center;
             width: 40px;
             height: 40px;
-            background-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            color: var(--light);
         }
         
         .social-icons a:hover {
-            background-color: var(--primary);
+            background: var(--primary);
             color: var(--dark);
+            transform: translateY(-3px);
         }
         
         .copyright {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 2.5rem;
             border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: rgba(255,255,255,0.7);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .copyright a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .copyright a:hover {
+            text-decoration: underline;
         }
         
         /* Responsive Design */
         @media (max-width: 900px) {
             nav {
-                display: none;
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background: var(--background);
+                flex-direction: column;
+                padding: 100px 2rem 2rem;
+                transition: right 0.3s;
+                z-index: 99;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 100;
             }
             
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
             
             .search-bar {
                 width: 200px;
             }
+            
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 600px) {
             .hero {
-                height: 300px;
+                height: 400px;
             }
             
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .hero p {
@@ -360,6 +607,50 @@
             .section-title h2 {
                 font-size: 2rem;
             }
+            
+            .logo div {
+                font-size: 1.5rem;
+            }
+            
+            .search-bar {
+                width: 180px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .chart-card {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .chart-card:nth-child(1) { animation-delay: 0.1s; }
+        .chart-card:nth-child(2) { animation-delay: 0.2s; }
+        .chart-card:nth-child(3) { animation-delay: 0.3s; }
+        .chart-card:nth-child(4) { animation-delay: 0.4s; }
+        .chart-card:nth-child(5) { animation-delay: 0.5s; }
+        .chart-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
         }
     </style>
 </head>
@@ -370,7 +661,7 @@
             <i class="fas fa-music"></i>
             <div>GRAM<span>CHARTS</span></div>
         </div>
-        <nav>
+        <nav id="mainNav">
             <ul>
                 <li><a href="#">Accueil</a></li>
                 <li><a href="#">Classements</a></li>
@@ -381,16 +672,27 @@
         </nav>
         <div class="search-bar">
             <i class="fas fa-search"></i>
-            <input type="text" placeholder="Rechercher un artiste, une chanson...">
+            <input type="text" id="searchInput" placeholder="Rechercher un artiste, une chanson...">
         </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Découvrez les classements musicaux du moment</h1>
-        <p>Gramcharts vous propose les charts les plus populaires de la musique francophone. Restez à jour avec les hits du moment et découvrez les nouvelles tendances.</p>
-        <a href="#" class="btn">Voir les classements</a>
+        <div class="hero-content">
+            <h1>Découvrez les classements musicaux du moment</h1>
+            <p>Gramcharts vous propose les charts les plus populaires de la musique francophone. Restez à jour avec les hits du moment et découvrez les nouvelles tendances.</p>
+            <a href="#" class="btn">Voir les classements</a>
+        </div>
     </section>
+
+    <!-- Search Results -->
+    <div class="search-results" id="searchResults">
+        <h3>Résultats de recherche</h3>
+        <div id="resultsContainer"></div>
+    </div>
 
     <!-- Charts Section -->
     <section class="charts-section">
@@ -400,9 +702,11 @@
         
         <div class="charts-container">
             <!-- Chart 1 -->
-            <div class="chart-card">
-                <div class="chart-header">
+            <div class="chart-card" data-genre="pop">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top 50 Pop Francophone globale</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -424,9 +728,11 @@
             </div>
             
             <!-- Chart 2 -->
-            <div class="chart-card">
-                <div class="chart-header">
+            <div class="chart-card" data-genre="new">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top 30 Nouvelle Génération</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -448,9 +754,11 @@
             </div>
             
             <!-- Chart 3 -->
-            <div class="chart-card">
-                <div class="chart-header">
+            <div class="chart-card" data-genre="streaming">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1619983081563-430f63602b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top Streaming Pop Francophone</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -472,9 +780,11 @@
             </div>
             
             <!-- Chart 4 -->
-            <div class="chart-card">
-                <div class="chart-header">
+            <div class="chart-card" data-genre="rap">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top Rap 10 Francophone globale</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -493,9 +803,11 @@
             </div>
             
             <!-- Chart 5 -->
-            <div class="chart-card">
-                <div class="chart-header">
+            <div class="chart-card" data-genre="rnb">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1487180144351-b8472da7d491?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top RnB 10 Francophone globale</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -514,9 +826,11 @@
             </div>
             
             <!-- Chart 6 -->
-            <div class="chart-card">
-                <div class="chart-header">
+            <div class="chart-card" data-genre="hiphop">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header" onclick="toggleChart(this)">
                     <h3>Gram Top 50 Hip-Hop/RnB Francophone</h3>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
@@ -567,9 +881,9 @@
             <div class="footer-column">
                 <h3>À PROPOS</h3>
                 <ul>
-                    <li><a href="https://social-boost-horizon.netlify.app/">Notre équipe</a></li>
+                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/">Notre équipe</a></li>
                     <li><a href="#">Méthodologie</a></li>
-                    <li><a href="https://social-boost-horizon.netlify.app/">Partenaires</a></li>
+                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/">Partenaires</a></li>
                     <li><a href="#">Carrières</a></li>
                     <li><a href="wa.me/237699853665">Contact</a></li>
                 </ul>
@@ -586,39 +900,125 @@
             </div>
         </div>
         <div class="copyright">
-            &copy; 2023 Gramcharts. Tous droits réservés. Les classements sont mis à jour chaque semaine.site propulsé par SOCIAL BOOST HORIZON
+            &copy; 2023 Gramcharts. Tous droits réservés. Les classements sont mis à jour chaque semaine. Site propulsé par <a href="https://social-boost-horizon-new-sbh.vercel.app/">SOCIAL BOOST HORIZON</a>
         </div>
     </footer>
 
     <script>
-        // Animation au défilement
-        document.addEventListener('DOMContentLoaded', function() {
-            const chartCards = document.querySelectorAll('.chart-card');
+        // Fonction pour déplier/replier les classements
+        function toggleChart(header) {
+            const card = header.parentElement;
+            card.classList.toggle('expanded');
             
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = 1;
-                        entry.target.style.transform = 'translateY(0)';
+            // Fermer les autres cartes si on ouvre celle-ci
+            if (card.classList.contains('expanded')) {
+                document.querySelectorAll('.chart-card').forEach(otherCard => {
+                    if (otherCard !== card && otherCard.classList.contains('expanded')) {
+                        otherCard.classList.remove('expanded');
                     }
                 });
-            }, { threshold: 0.1 });
+            }
+        }
+        
+        // Recherche fonctionnelle
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const resultsContainer = document.getElementById('resultsContainer');
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
             
-            chartCards.forEach(card => {
-                card.style.opacity = 0;
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                observer.observe(card);
+            if (searchTerm.length < 2) {
+                searchResults.classList.remove('active');
+                resultsContainer.innerHTML = '';
+                return;
+            }
+            
+            // Recherche dans tous les classements
+            let resultsHTML = '';
+            let resultCount = 0;
+            
+            document.querySelectorAll('.chart-card').forEach(card => {
+                const chartTitle = card.querySelector('.chart-header h3').textContent.toLowerCase();
+                let chartResults = '';
+                
+                card.querySelectorAll('.chart-list li').forEach(item => {
+                    const songTitle = item.querySelector('.song-title').textContent.toLowerCase();
+                    const artist = item.querySelector('.artist').textContent.toLowerCase();
+                    const position = item.querySelector('.position').textContent;
+                    
+                    if (songTitle.includes(searchTerm) || artist.includes(searchTerm)) {
+                        chartResults += `
+                            <div class="result-item" style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <div style="display: flex; align-items: center;">
+                                    <span style="color: var(--primary); font-weight: bold; width: 30px;">${position}</span>
+                                    <div>
+                                        <div style="font-weight: 600;">${item.querySelector('.song-title').textContent}</div>
+                                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">${item.querySelector('.artist').textContent}</div>
+                                    </div>
+                                    <div style="margin-left: auto; font-size: 0.9rem; color: rgba(255,255,255,0.7);">${chartTitle}</div>
+                                </div>
+                            </div>
+                        `;
+                        resultCount++;
+                    }
+                });
+                
+                if (chartResults) {
+                    resultsHTML += `
+                        <div class="chart-results" style="margin-bottom: 20px;">
+                            <h4 style="margin-bottom: 10px; color: var(--primary);">${card.querySelector('.chart-header h3').textContent}</h4>
+                            ${chartResults}
+                        </div>
+                    `;
+                }
             });
             
+            if (resultCount > 0) {
+                resultsContainer.innerHTML = resultsHTML;
+                searchResults.classList.add('active');
+            } else {
+                resultsContainer.innerHTML = '<p style="text-align: center; padding: 20px;">Aucun résultat trouvé</p>';
+                searchResults.classList.add('active');
+            }
+        });
+        
+        // Menu mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            this.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : 
+                '<i class="fas fa-bars"></i>';
+        });
+        
+        // Fermer le menu si on clique à l'extérieur
+        document.addEventListener('click', function(e) {
+            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mainNav.classList.contains('active')) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        // Animation des cartes au défilement
+        document.addEventListener('DOMContentLoaded', function() {
             // Animation du bouton
             const btn = document.querySelector('.btn');
             btn.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-3px)';
+                this.style.transform = 'translateY(-5px)';
             });
             
             btn.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0)';
+            });
+            
+            // Fermer les résultats de recherche si on clique ailleurs
+            document.addEventListener('click', function(e) {
+                if (!searchResults.contains(e.target) && !searchInput.contains(e.target)) {
+                    searchResults.classList.remove('active');
+                }
             });
         });
     </script>
