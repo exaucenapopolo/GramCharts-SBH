@@ -42,7 +42,7 @@
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             box-shadow: 0 2px 20px rgba(0,0,0,0.5);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 215, 0, 0.2);
@@ -94,6 +94,12 @@
             width: 100%;
         }
         
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
         .search-bar {
             display: flex;
             align-items: center;
@@ -123,6 +129,27 @@
         .search-bar i {
             color: var(--light);
             margin-right: 8px;
+        }
+        
+        .shazam-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--light);
+            font-size: 1.2rem;
+        }
+        
+        .shazam-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: scale(1.1);
         }
         
         .mobile-menu-btn {
@@ -166,7 +193,7 @@
             position: relative;
             z-index: 2;
             max-width: 800px;
-            padding: 20px;
+            padding: 30px;
             background: rgba(10, 10, 26, 0.7);
             border-radius: 15px;
             backdrop-filter: blur(5px);
@@ -192,6 +219,13 @@
             line-height: 1.7;
         }
         
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
         .btn {
             background: linear-gradient(45deg, var(--primary), var(--accent));
             color: var(--dark);
@@ -208,6 +242,12 @@
             overflow: hidden;
             z-index: 1;
             box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--light);
         }
         
         .btn::before {
@@ -230,6 +270,10 @@
         
         .btn:hover::before {
             opacity: 1;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255, 215, 0, 0.1);
         }
         
         /* Charts Section */
@@ -278,6 +322,8 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             border: 1px solid rgba(255, 215, 0, 0.1);
+            display: flex;
+            flex-direction: column;
         }
         
         .chart-card:hover {
@@ -329,7 +375,7 @@
         }
         
         .chart-content {
-            padding: 1.5rem;
+            padding: 0 1.5rem;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease, padding 0.5s ease;
@@ -433,6 +479,8 @@
             margin: 1.5rem 0;
             display: none;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 500;
         }
         
         .search-results.active {
@@ -443,6 +491,154 @@
             color: var(--primary);
             margin-bottom: 1rem;
             font-size: 1.3rem;
+        }
+        
+        .result-item {
+            padding: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-position {
+            color: var(--primary);
+            font-weight: bold;
+            width: 30px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .result-info {
+            flex: 1;
+            padding: 0 15px;
+        }
+        
+        .result-song-title {
+            font-weight: 600;
+        }
+        
+        .result-artist {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 4px;
+        }
+        
+        /* Shazam Modal */
+        .shazam-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .shazam-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .shazam-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+        
+        .shazam-content h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .shazam-wave {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 120px;
+            margin: 30px 0;
+        }
+        
+        .wave-bar {
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            margin: 0 3px;
+            border-radius: 5px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+        
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { animation-delay: 0.6s; }
+        .wave-bar:nth-child(8) { animation-delay: 0.7s; }
+        
+        .shazam-result {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .shazam-result.active {
+            display: block;
+        }
+        
+        .shazam-album-cover {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .shazam-song-title {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .shazam-artist {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary);
         }
         
         /* Footer */
@@ -567,7 +763,7 @@
                 flex-direction: column;
                 padding: 100px 2rem 2rem;
                 transition: right 0.3s;
-                z-index: 99;
+                z-index: 999;
                 box-shadow: -5px 0 15px rgba(0,0,0,0.3);
             }
             
@@ -580,9 +776,20 @@
                 gap: 1.5rem;
             }
             
+            .search-container {
+                width: 100%;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 400px;
+            }
+            
             .mobile-menu-btn {
                 display: block;
-                z-index: 100;
+                z-index: 1000;
             }
             
             .hero h1 {
@@ -592,10 +799,6 @@
             .hero-content {
                 padding: 15px;
                 margin: 0 15px;
-            }
-            
-            .search-bar {
-                width: 200px;
             }
             
             .charts-container {
@@ -627,12 +830,22 @@
             .search-bar {
                 width: 180px;
             }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
         }
         
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 60px; }
         }
         
         .chart-card {
@@ -682,9 +895,14 @@
                 <li><a href="apropos.html">À propos</a></li>
             </ul>
         </nav>
-        <div class="search-bar">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Rechercher un artiste, une chanson...">
+        <div class="search-container">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Rechercher un artiste, une chanson...">
+            </div>
+            <button class="shazam-btn" id="shazamBtn" title="Reconnaître une musique">
+                <i class="fas fa-music"></i>
+            </button>
         </div>
         <button class="mobile-menu-btn" id="mobileMenuBtn">
             <i class="fas fa-bars"></i>
@@ -696,7 +914,10 @@
         <div class="hero-content">
             <h1>Découvrez les classements musicaux du moment</h1>
             <p>Gramcharts vous propose les charts les plus populaires de la musique francophone. Restez à jour avec les hits du moment et découvrez les nouvelles tendances.</p>
-            <a href="classements.html" class="btn">Voir les classements</a>
+            <div class="hero-buttons">
+                <a href="classements.html" class="btn">Voir les classements</a>
+                <a href="#" class="btn btn-outline">Devenir Premium</a>
+            </div>
         </div>
     </section>
 
@@ -865,6 +1086,34 @@
         </div>
     </section>
 
+    <!-- Shazam Modal -->
+    <div class="shazam-modal" id="shazamModal">
+        <div class="shazam-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h2>Recherche de musique</h2>
+            <div class="shazam-wave">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+            <p>Écoutez une musique pour la reconnaître...</p>
+            
+            <div class="shazam-result" id="shazamResult">
+                <div class="shazam-album-cover" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
+                <div class="shazam-song-title" id="shazamSongTitle">Titre de la chanson</div>
+                <div class="shazam-artist" id="shazamArtist">Artiste</div>
+                <p>Cette musique a été identifiée avec succès !</p>
+            </div>
+            
+            <button class="btn" id="startShazam">Commencer l'écoute</button>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="footer-content">
@@ -920,15 +1169,20 @@
         // Fonction pour déplier/replier les classements
         function toggleChart(header) {
             const card = header.parentElement;
-            card.classList.toggle('expanded');
+            const isExpanded = card.classList.contains('expanded');
             
-            // Fermer les autres cartes si on ouvre celle-ci
-            if (card.classList.contains('expanded')) {
-                document.querySelectorAll('.chart-card').forEach(otherCard => {
-                    if (otherCard !== card && otherCard.classList.contains('expanded')) {
-                        otherCard.classList.remove('expanded');
-                    }
-                });
+            // Fermer toutes les cartes d'abord
+            document.querySelectorAll('.chart-card.expanded').forEach(otherCard => {
+                if (otherCard !== card) {
+                    otherCard.classList.remove('expanded');
+                }
+            });
+            
+            // Ouvrir/fermer la carte sélectionnée
+            if (isExpanded) {
+                card.classList.remove('expanded');
+            } else {
+                card.classList.add('expanded');
             }
         }
         
@@ -951,7 +1205,7 @@
             let resultCount = 0;
             
             document.querySelectorAll('.chart-card').forEach(card => {
-                const chartTitle = card.querySelector('.chart-header h3').textContent.toLowerCase();
+                const chartTitle = card.querySelector('.chart-header h3').textContent;
                 let chartResults = '';
                 
                 card.querySelectorAll('.chart-list li').forEach(item => {
@@ -961,15 +1215,13 @@
                     
                     if (songTitle.includes(searchTerm) || artist.includes(searchTerm)) {
                         chartResults += `
-                            <div class="result-item" style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                                <div style="display: flex; align-items: center;">
-                                    <span style="color: var(--primary); font-weight: bold; width: 30px;">${position}</span>
-                                    <div>
-                                        <div style="font-weight: 600;">${item.querySelector('.song-title').textContent}</div>
-                                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.7);">${item.querySelector('.artist').textContent}</div>
-                                    </div>
-                                    <div style="margin-left: auto; font-size: 0.9rem; color: rgba(255,255,255,0.7);">${chartTitle}</div>
+                            <div class="result-item">
+                                <div class="result-position">${position}</div>
+                                <div class="result-info">
+                                    <div class="result-song-title">${item.querySelector('.song-title').textContent}</div>
+                                    <div class="result-artist">${item.querySelector('.artist').textContent}</div>
                                 </div>
+                                <div class="result-chart">${chartTitle}</div>
                             </div>
                         `;
                         resultCount++;
@@ -978,8 +1230,8 @@
                 
                 if (chartResults) {
                     resultsHTML += `
-                        <div class="chart-results" style="margin-bottom: 20px;">
-                            <h4 style="margin-bottom: 10px; color: var(--primary);">${card.querySelector('.chart-header h3').textContent}</h4>
+                        <div class="chart-results">
+                            <h4>${chartTitle}</h4>
                             ${chartResults}
                         </div>
                     `;
@@ -1000,7 +1252,7 @@
         const mainNav = document.getElementById('mainNav');
         
         mobileMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Empêcher la propagation de l'événement
+            e.stopPropagation();
             mainNav.classList.toggle('active');
             this.innerHTML = mainNav.classList.contains('active') ? 
                 '<i class="fas fa-times"></i>' : 
@@ -1021,6 +1273,58 @@
                 mainNav.classList.remove('active');
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
+        });
+        
+        // Fonctionnalité Shazam
+        const shazamBtn = document.getElementById('shazamBtn');
+        const shazamModal = document.getElementById('shazamModal');
+        const closeModal = document.getElementById('closeModal');
+        const startShazam = document.getElementById('startShazam');
+        const shazamResult = document.getElementById('shazamResult');
+        const shazamSongTitle = document.getElementById('shazamSongTitle');
+        const shazamArtist = document.getElementById('shazamArtist');
+        
+        // Liste de chansons pour la simulation Shazam
+        const songs = [
+            { title: "Monaco", artist: "Bad Bunny", cover: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { title: "Flowers", artist: "Miley Cyrus", cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { title: "Kill Bill", artist: "SZA", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { title: "Calm Down", artist: "Rema & Selena Gomez", cover: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { title: "Creepin'", artist: "Metro Boomin", cover: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" }
+        ];
+        
+        shazamBtn.addEventListener('click', function() {
+            shazamModal.classList.add('active');
+            shazamResult.classList.remove('active');
+        });
+        
+        closeModal.addEventListener('click', function() {
+            shazamModal.classList.remove('active');
+        });
+        
+        startShazam.addEventListener('click', function() {
+            // Simulation de l'écoute
+            startShazam.textContent = "Écoute en cours...";
+            startShazam.disabled = true;
+            
+            // Simulation de la reconnaissance après 3 secondes
+            setTimeout(() => {
+                const randomSong = songs[Math.floor(Math.random() * songs.length)];
+                shazamSongTitle.textContent = randomSong.title;
+                shazamArtist.textContent = randomSong.artist;
+                document.querySelector('.shazam-album-cover').style.backgroundImage = `url('${randomSong.cover}')`;
+                shazamResult.classList.add('active');
+                
+                startShazam.textContent = "Recommencer";
+                startShazam.disabled = false;
+            }, 3000);
+        });
+        
+        // Fermer la modal si on clique en dehors
+        window.addEventListener('click', function(e) {
+            if (e.target === shazamModal) {
+                shazamModal.classList.remove('active');
+            }
         });
         
         // Animation des cartes au défilement
