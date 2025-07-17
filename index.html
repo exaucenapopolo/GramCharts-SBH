@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="GramCharts - Découvrez les meilleurs classements musicaux francophones">
-    <meta name="keywords" content="musique, classement, francophone, rap, pop, rnb, streaming">
-    <meta name="author" content="GramCharts">
     <title>Accueil - Gramcharts</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -144,32 +140,6 @@
         .search-bar i {
             color: var(--light);
             margin-right: 8px;
-        }
-        
-        .search-suggestions {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-top: 5px;
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-            z-index: 1000;
-        }
-        
-        .search-suggestion-item {
-            padding: 10px 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .search-suggestion-item:hover {
-            background: rgba(255,255,255,0.1);
         }
         
         .shazam-btn {
@@ -551,6 +521,62 @@
             color: rgba(255,255,255,0.6);
         }
         
+        /* Vote Section */
+        .vote-section {
+            padding: 4rem 5%;
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.1), rgba(30, 144, 255, 0.1));
+        }
+        
+        .vote-cta {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .vote-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .vote-cta p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .vote-btn {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            border-radius: 30px;
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .vote-btn:hover {
+            background: #ffc800;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .vote-btn i {
+            font-size: 1.3rem;
+        }
+        
         /* Newsletter */
         .newsletter-section {
             padding: 4rem 5%;
@@ -593,6 +619,15 @@
         .newsletter-form button:hover {
             background: #ffc800;
             transform: scale(1.05);
+        }
+        
+        .confirmation-message {
+            display: none;
+            background: rgba(30, 144, 255, 0.2);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
         }
         
         /* Footer */
@@ -705,244 +740,6 @@
             text-decoration: underline;
         }
         
-        /* Back to top button */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            color: var(--dark);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .back-to-top:hover {
-            transform: translateY(-5px);
-        }
-        
-        /* Cookie Banner */
-        .cookie-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(30, 30, 60, 0.95);
-            padding: 1.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
-            z-index: 999;
-            transform: translateY(100%);
-            transition: transform 0.5s ease;
-            border-top: 1px solid var(--primary);
-        }
-        
-        .cookie-banner.visible {
-            transform: translateY(0);
-        }
-        
-        .cookie-content {
-            max-width: 800px;
-        }
-        
-        .cookie-banner p {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        
-        .cookie-banner a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .cookie-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .cookie-btn {
-            padding: 0.6rem 1.5rem;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        
-        .cookie-btn.accept {
-            background: var(--primary);
-            color: var(--dark);
-        }
-        
-        .cookie-btn.decline {
-            background: transparent;
-            color: var(--light);
-            border: 1px solid var(--light);
-        }
-        
-        .cookie-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        /* Player */
-        .music-player {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(18, 18, 48, 0.95);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255, 215, 0, 0.3);
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 900;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .music-player.visible {
-            transform: translateY(0);
-        }
-        
-        .player-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            width: 30%;
-        }
-        
-        .player-thumbnail {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            background-size: cover;
-        }
-        
-        .player-details {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .player-details h4 {
-            font-size: 1.1rem;
-        }
-        
-        .player-details p {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
-        }
-        
-        .player-controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 40%;
-        }
-        
-        .player-buttons {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .player-btn {
-            background: transparent;
-            border: none;
-            color: var(--light);
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .player-btn.play {
-            font-size: 1.8rem;
-            color: var(--primary);
-        }
-        
-        .player-btn:hover {
-            color: var(--primary);
-        }
-        
-        .player-progress {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .progress-time {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.7);
-            min-width: 40px;
-        }
-        
-        .progress-bar {
-            flex: 1;
-            height: 4px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 2px;
-            position: relative;
-            cursor: pointer;
-        }
-        
-        .progress-fill {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 0;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-        
-        .player-volume {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            width: 20%;
-        }
-        
-        .volume-bar {
-            flex: 1;
-            height: 4px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 2px;
-            position: relative;
-            cursor: pointer;
-        }
-        
-        .volume-fill {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 70%;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-        
         /* Responsive */
         @media (max-width: 900px) {
             nav {
@@ -995,16 +792,12 @@
                 flex-direction: column;
             }
             
-            .player-info {
-                width: 40%;
+            .vote-cta {
+                padding: 2rem;
             }
             
-            .player-controls {
-                width: 60%;
-            }
-            
-            .player-volume {
-                display: none;
+            .vote-cta h2 {
+                font-size: 2rem;
             }
         }
         
@@ -1026,16 +819,12 @@
                 width: 180px;
             }
             
-            .player-info {
-                width: 50%;
+            .vote-cta {
+                padding: 1.5rem;
             }
             
-            .player-controls {
-                width: 50%;
-            }
-            
-            .player-buttons {
-                gap: 1rem;
+            .vote-cta h2 {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -1053,6 +842,7 @@
                 <li><a href="classements.html">Classements</a></li>
                 <li><a href="nouveautes.html">Nouveautés</a></li>
                 <li><a href="artistes.html">Artistes</a></li>
+                <li><a href="vote.html">Votes</a></li>
                 <li><a href="apropos.html">À propos</a></li>
             </ul>
         </nav>
@@ -1060,9 +850,6 @@
             <div class="search-bar">
                 <i class="fas fa-search"></i>
                 <input type="text" id="searchInput" placeholder="Rechercher un artiste, une chanson...">
-            </div>
-            <div class="search-suggestions" id="searchSuggestions">
-                <!-- Suggestions will be added dynamically -->
             </div>
             <button class="shazam-btn" id="shazamBtn" title="Reconnaître une musique">
                 <i class="fas fa-music"></i>
@@ -1080,6 +867,7 @@
             <p>Découvrez en un clin d’œil les meilleurs classements musicaux par genre et popularité.</p>
             <div class="btn-group">
                 <a href="classements.html" class="btn">Voir les classements</a>
+                <a href="vote.html" class="btn">Participer aux votes</a>
                 <a href="https://www.patreon.com/gramcharts" target="_blank" class="btn">S'abonner</a>
             </div>
         </div>
@@ -1112,6 +900,17 @@
                 <h3>Personnalisation</h3>
                 <p>Créez vos propres classements et listes de lecture selon vos préférences musicales.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- Vote Section -->
+    <section class="vote-section">
+        <div class="vote-cta">
+            <h2>Battles Musicales</h2>
+            <p>Participez à nos battles musicales et votez pour vos artistes préférés. Qui mérite de monter sur le podium ?</p>
+            <button class="vote-btn" onclick="location.href='vote.html'">
+                <i class="fas fa-vote-yea"></i> Voter maintenant
+            </button>
         </div>
     </section>
 
@@ -1295,10 +1094,13 @@
             <h2>Restez informé</h2>
         </div>
         <p>Inscrivez-vous à notre newsletter pour recevoir les classements hebdomadaires et les dernières actualités musicales.</p>
-        <form class="newsletter-form">
+        <form class="newsletter-form" id="newsletterForm">
             <input type="email" placeholder="Votre adresse email" required>
             <button type="submit">S'abonner</button>
         </form>
+        <div class="confirmation-message" id="confirmationMessage">
+            <p><i class="fas fa-check-circle"></i> Merci pour votre inscription ! Un email de confirmation a été envoyé.</p>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -1352,53 +1154,6 @@
         </div>
     </footer>
 
-    <!-- Back to top button -->
-    <div class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <!-- Music Player -->
-    <div class="music-player" id="musicPlayer">
-        <div class="player-info">
-            <div class="player-thumbnail" id="playerThumbnail"></div>
-            <div class="player-details">
-                <h4 id="playerTitle">Titre de la chanson</h4>
-                <p id="playerArtist">Artiste</p>
-            </div>
-        </div>
-        <div class="player-controls">
-            <div class="player-buttons">
-                <button class="player-btn" id="prevBtn"><i class="fas fa-step-backward"></i></button>
-                <button class="player-btn play" id="playBtn"><i class="fas fa-play"></i></button>
-                <button class="player-btn" id="nextBtn"><i class="fas fa-step-forward"></i></button>
-            </div>
-            <div class="player-progress">
-                <div class="progress-time" id="currentTime">0:00</div>
-                <div class="progress-bar" id="progressBar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <div class="progress-time" id="totalTime">0:00</div>
-            </div>
-        </div>
-        <div class="player-volume">
-            <button class="player-btn"><i class="fas fa-volume-up"></i></button>
-            <div class="volume-bar" id="volumeBar">
-                <div class="volume-fill" id="volumeFill"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Cookie Banner -->
-    <div class="cookie-banner" id="cookieBanner">
-        <div class="cookie-content">
-            <p>Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant à naviguer, vous acceptez notre <a href="support.html">politique de cookies</a>.</p>
-        </div>
-        <div class="cookie-buttons">
-            <button class="cookie-btn accept" id="acceptCookies">Accepter</button>
-            <button class="cookie-btn decline" id="declineCookies">Refuser</button>
-        </div>
-    </div>
-
     <script>
         // Mobile menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -1433,221 +1188,6 @@
             });
         });
         
-        // Search suggestions
-        const searchInput = document.getElementById('searchInput');
-        const searchSuggestions = document.getElementById('searchSuggestions');
-        const suggestions = [
-            "Angèle - Démons",
-            "Stromae - Santé",
-            "Damso - Mosaïque Solitaire",
-            "PNL - Au DD",
-            "Lous and The Yakuza - Dilemme",
-            "Orelsan - L'odeur de l'essence",
-            "Jul - La machine",
-            "Soprano - En feu",
-            "Ninho - Jefe",
-            "Aya Nakamura - Doudou"
-        ];
-        
-        searchInput.addEventListener('input', () => {
-            const value = searchInput.value.toLowerCase();
-            searchSuggestions.innerHTML = '';
-            
-            if (value.length > 1) {
-                const filtered = suggestions.filter(item => 
-                    item.toLowerCase().includes(value)
-                );
-                
-                if (filtered.length > 0) {
-                    filtered.forEach(item => {
-                        const div = document.createElement('div');
-                        div.className = 'search-suggestion-item';
-                        div.textContent = item;
-                        div.addEventListener('click', () => {
-                            searchInput.value = item;
-                            searchSuggestions.style.display = 'none';
-                        });
-                        searchSuggestions.appendChild(div);
-                    });
-                    searchSuggestions.style.display = 'block';
-                } else {
-                    searchSuggestions.style.display = 'none';
-                }
-            } else {
-                searchSuggestions.style.display = 'none';
-            }
-        });
-        
-        document.addEventListener('click', (e) => {
-            if (!searchSuggestions.contains(e.target) {
-                searchSuggestions.style.display = 'none';
-            }
-        });
-        
-        // Back to top button
-        const backToTop = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-        
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // Cookie banner
-        const cookieBanner = document.getElementById('cookieBanner');
-        const acceptCookies = document.getElementById('acceptCookies');
-        const declineCookies = document.getElementById('declineCookies');
-        
-        if (!localStorage.getItem('cookiesAccepted')) {
-            setTimeout(() => {
-                cookieBanner.classList.add('visible');
-            }, 3000);
-        }
-        
-        acceptCookies.addEventListener('click', () => {
-            localStorage.setItem('cookiesAccepted', 'true');
-            cookieBanner.classList.remove('visible');
-        });
-        
-        declineCookies.addEventListener('click', () => {
-            cookieBanner.classList.remove('visible');
-        });
-        
-        // Music player
-        const musicPlayer = document.getElementById('musicPlayer');
-        const playerThumbnail = document.getElementById('playerThumbnail');
-        const playerTitle = document.getElementById('playerTitle');
-        const playerArtist = document.getElementById('playerArtist');
-        const playBtn = document.getElementById('playBtn');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const progressBar = document.getElementById('progressBar');
-        const progressFill = document.getElementById('progressFill');
-        const currentTimeEl = document.getElementById('currentTime');
-        const totalTimeEl = document.getElementById('totalTime');
-        
-        // Sample music data
-        const tracks = [
-            {
-                title: "Démons",
-                artist: "Angèle ft. Damso",
-                thumbnail: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                duration: 220 // seconds
-            },
-            {
-                title: "Santé",
-                artist: "Stromae",
-                thumbnail: "https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                duration: 195
-            },
-            {
-                title: "Mosaïque Solitaire",
-                artist: "Damso",
-                thumbnail: "https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                duration: 210
-            }
-        ];
-        
-        let currentTrack = 0;
-        let isPlaying = false;
-        
-        // Initialize player
-        function loadTrack(index) {
-            const track = tracks[index];
-            playerThumbnail.style.backgroundImage = `url('${track.thumbnail}')`;
-            playerTitle.textContent = track.title;
-            playerArtist.textContent = track.artist;
-            
-            // Format duration
-            const minutes = Math.floor(track.duration / 60);
-            const seconds = track.duration % 60;
-            totalTimeEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            
-            // Show player
-            musicPlayer.classList.add('visible');
-        }
-        
-        playBtn.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            playBtn.querySelector('i').className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
-            
-            if (isPlaying) {
-                // Simulate playing
-                simulatePlayback();
-            }
-        });
-        
-        prevBtn.addEventListener('click', () => {
-            currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
-            loadTrack(currentTrack);
-        });
-        
-        nextBtn.addEventListener('click', () => {
-            currentTrack = (currentTrack + 1) % tracks.length;
-            loadTrack(currentTrack);
-        });
-        
-        // Simulate playback progress
-        function simulatePlayback() {
-            if (!isPlaying) return;
-            
-            const trackDuration = tracks[currentTrack].duration;
-            let currentTime = 0;
-            
-            const interval = setInterval(() => {
-                if (!isPlaying) {
-                    clearInterval(interval);
-                    return;
-                }
-                
-                currentTime++;
-                const progress = (currentTime / trackDuration) * 100;
-                progressFill.style.width = `${progress}%`;
-                
-                // Format current time
-                const minutes = Math.floor(currentTime / 60);
-                const seconds = currentTime % 60;
-                currentTimeEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                
-                if (currentTime >= trackDuration) {
-                    clearInterval(interval);
-                    isPlaying = false;
-                    playBtn.querySelector('i').className = 'fas fa-play';
-                    progressFill.style.width = '0%';
-                    currentTimeEl.textContent = '0:00';
-                }
-            }, 1000);
-        }
-        
-        // Click on progress bar to seek
-        progressBar.addEventListener('click', (e) => {
-            if (!isPlaying) return;
-            
-            const width = progressBar.clientWidth;
-            const clickX = e.offsetX;
-            const percentage = (clickX / width) * 100;
-            progressFill.style.width = `${percentage}%`;
-            
-            // Update current time display
-            const trackDuration = tracks[currentTrack].duration;
-            const currentTime = Math.floor((percentage / 100) * trackDuration);
-            const minutes = Math.floor(currentTime / 60);
-            const seconds = currentTime % 60;
-            currentTimeEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        });
-        
-        // Initialize the player with first track
-        loadTrack(0);
-        
         // Shazam button effect
         const shazamBtn = document.getElementById('shazamBtn');
         shazamBtn.addEventListener('click', () => {
@@ -1657,6 +1197,26 @@
                 shazamBtn.innerHTML = '<i class="fas fa-music"></i>';
                 alert("Musique reconnue : Angèle - Démons");
             }, 2000);
+        });
+        
+        // Newsletter form
+        const newsletterForm = document.getElementById('newsletterForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            
+            // Simulation d'envoi
+            this.style.display = 'none';
+            confirmationMessage.style.display = 'block';
+            
+            // Réinitialiser après 5 secondes
+            setTimeout(() => {
+                this.style.display = 'flex';
+                confirmationMessage.style.display = 'none';
+                this.reset();
+            }, 5000);
         });
     </script>
 </body>
