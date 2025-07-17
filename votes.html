@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battles Musicales - Gramcharts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FFD700; /* Jaune */
+            --secondary: #1E90FF; /* Bleu */
+            --accent: #FF6B6B; /* Rouge */
+            --dark: #000000; /* Noir */
+            --light: #FFFFFF; /* Blanc */
+            --gray: #F5F5F5;
+            --dark-gray: #333333;
+            --background: #0A0A1A;
+            --card-bg: #121230;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(10, 10, 26, 0.95);
+            color: var(--light);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            height: 80px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--light);
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: scale(1.03);
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+        
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero-battle {
+            background: linear-gradient(135deg, rgba(30, 30, 60, 0.9), rgba(10, 10, 26, 0.95)), 
+                        url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--light);
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        
+        .hero-battle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 0%, var(--background) 150%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 30px;
+        }
+        
+        .hero-battle h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        
+        .hero-battle p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Battles Section */
+        .battles-section {
+            padding: 4rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--light);
+            display: inline-block;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+            z-index: 0;
+        }
+        
+        .battles-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+        
+        .battle-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .battle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        .battle-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .battle-competitors {
+            display: flex;
+            justify-content: space-around;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .competitor {
+            flex: 1;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+        
+        .competitor:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .competitor.selected {
+            border-color: var(--primary);
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        .competitor-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            margin: 0 auto 1rem;
+            border: 3px solid rgba(255,255,255,0.1);
+        }
+        
+        .competitor.selected .competitor-image {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .competitor h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .vote-count {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .vote-btn {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            border-radius: 30px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+            display: inline-block;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .vote-btn:hover {
+            background: #ffc800;
+            transform: scale(1.05);
+        }
+        
+        .vote-btn:disabled {
+            background: var(--dark-gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .battle-stats {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .stat-bar {
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+        
+        .stat-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 5px;
+            width: 50%;
+        }
+        
+        .stats-numbers {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        /* Newsletter */
+        .newsletter-section {
+            padding: 4rem 5%;
+            background: linear-gradient(45deg, rgba(30, 144, 255, 0.1), rgba(255, 215, 0, 0.1));
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            color: var(--light);
+            font-size: 1rem;
+        }
+        
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .newsletter-form button {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            border-radius: 30px;
+            padding: 0 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .newsletter-form button:hover {
+            background: #ffc800;
+            transform: scale(1.05);
+        }
+        
+        .confirmation-message {
+            display: none;
+            background: rgba(30, 144, 255, 0.2);
+            border: 1px solid var(--secondary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, rgba(10, 10, 26, 0.95), var(--background));
+            color: var(--light);
+            padding: 5rem 5% 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-column h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-column a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s, padding-left 0.3s;
+            display: block;
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+            color: var(--light);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .copyright a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            nav {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background: var(--background);
+                flex-direction: column;
+                padding: 100px 2rem 2rem;
+                transition: right 0.3s;
+                z-index: 999;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1000;
+            }
+            
+            .hero-battle {
+                height: 220px;
+                margin-top: 70px;
+            }
+            
+            .hero-battle h1 {
+                font-size: 2.2rem;
+            }
+            
+            .battle-competitors {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="index.html" class="logo">
+            <i class="fas fa-music"></i>
+            <div>GRAM<span>CHARTS</span></div>
+        </a>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="classements.html">Classements</a></li>
+                <li><a href="nouveautes.html">Nouveautés</a></li>
+                <li><a href="artistes.html">Artistes</a></li>
+                <li><a href="vote.html" class="active">Votez</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-battle">
+        <div class="hero-content">
+            <h1>Battles de Musique</h1>
+            <p>Votez pour vos artistes préférés et voyez qui domine le classement !</p>
+        </div>
+    </section>
+
+    <!-- Battles Section -->
+    <section class="battles-section">
+        <div class="section-title">
+            <h2>Battles en cours</h2>
+        </div>
+        <div class="battles-container" id="battlesContainer">
+            <!-- Battle 1 -->
+            <div class="battle-card">
+                <h3 class="battle-title">Battle #1 - Rap Francophone</h3>
+                <div class="battle-competitors">
+                    <div class="competitor" data-battle="1" data-competitor="1" onclick="selectCompetitor(1, 1)">
+                        <div class="competitor-image" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                        <h3>Damso</h3>
+                        <div class="vote-count">Votes: <span id="votes1-1">1425</span></div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">VS</div>
+                    <div class="competitor" data-battle="1" data-competitor="2" onclick="selectCompetitor(1, 2)">
+                        <div class="competitor-image" style="background-image: url('https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                        <h3>PNL</h3>
+                        <div class="vote-count">Votes: <span id="votes1-2">1890</span></div>
+                    </div>
+                </div>
+                <button class="vote-btn" id="voteBtn1" onclick="vote(1)" disabled>Voter</button>
+                <div class="battle-stats">
+                    <div class="stat-bar">
+                        <div class="stat-fill" id="statFill1" style="width: 43%;"></div>
+                    </div>
+                    <div class="stats-numbers">
+                        <span id="percent1-1">43%</span>
+                        <span id="percent1-2">57%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Battle 2 -->
+            <div class="battle-card">
+                <h3 class="battle-title">Battle #2 - Pop Internationale</h3>
+                <div class="battle-competitors">
+                    <div class="competitor" data-battle="2" data-competitor="1" onclick="selectCompetitor(2, 1)">
+                        <div class="competitor-image" style="background-image: url('https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                        <h3>Taylor Swift</h3>
+                        <div class="vote-count">Votes: <span id="votes2-1">2105</span></div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">VS</div>
+                    <div class="competitor" data-battle="2" data-competitor="2" onclick="selectCompetitor(2, 2)">
+                        <div class="competitor-image" style="background-image: url('https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                        <h3>Beyoncé</h3>
+                        <div class="vote-count">Votes: <span id="votes2-2">1780</span></div>
+                    </div>
+                </div>
+                <button class="vote-btn" id="voteBtn2" onclick="vote(2)" disabled>Voter</button>
+                <div class="battle-stats">
+                    <div class="stat-bar">
+                        <div class="stat-fill" id="statFill2" style="width: 54%;"></div>
+                    </div>
+                    <div class="stats-numbers">
+                        <span id="percent2-1">54%</span>
+                        <span id="percent2-2">46%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Battle 3 -->
+            <div class="battle-card">
+                <h3 class="battle-title">Battle #3 - Nouvelle Génération</h3>
+                <div class="battle-competitors">
+                    <div class="competitor" data-battle="3" data-competitor="1" onclick="selectCompetitor(3, 1)">
+                        <div class="competitor-image" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                        <h3>Lous and The Yakuza</h3>
+                        <div class="vote-count">Votes: <span id="votes3-1">925</span></div>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary);">VS</div>
+                    <div class="competitor" data-battle="3" data-competitor="2" onclick="selectCompetitor(3, 2)">
+                        <div class="competitor-image" style="background-image: url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                        <h3>Aya Nakamura</h3>
+                        <div class="vote-count">Votes: <span id="votes3-2">1560</span></div>
+                    </div>
+                </div>
+                <button class="vote-btn" id="voteBtn3" onclick="vote(3)" disabled>Voter</button>
+                <div class="battle-stats">
+                    <div class="stat-bar">
+                        <div class="stat-fill" id="statFill3" style="width: 37%;"></div>
+                    </div>
+                    <div class="stats-numbers">
+                        <span id="percent3-1">37%</span>
+                        <span id="percent3-2">63%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="section-title">
+            <h2>Restez informé</h2>
+        </div>
+        <p>Inscrivez-vous à notre newsletter pour recevoir les résultats des battles et les prochains événements.</p>
+        <form class="newsletter-form" id="newsletterForm">
+            <input type="email" placeholder="Votre adresse email" required>
+            <button type="submit">S'abonner</button>
+        </form>
+        <div class="confirmation-message" id="confirmationMessage">
+            <p><i class="fas fa-check-circle"></i> Merci pour votre inscription ! Un email de confirmation a été envoyé.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>GRAMCHARTS</h3>
+                <p>Votre source de classements musicaux francophones. Découvrez les hits du moment et les nouvelles tendances.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-spotify"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>CLASSEMENTS</h3>
+                <ul>
+                    <li><a href="classements.html">Pop Francophone</a></li>
+                    <li><a href="classements.html">Nouvelle Génération</a></li>
+                    <li><a href="classements.html">Streaming Pop</a></li>
+                    <li><a href="classements.html">Rap Francophone</a></li>
+                    <li><a href="classements.html">RnB Francophone</a></li>
+                    <li><a href="classements.html">Hip-Hop/RnB</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>ÉVÉNEMENTS</h3>
+                <ul>
+                    <li><a href="vote.html">Battles en cours</a></li>
+                    <li><a href="vote.html">Battles à venir</a></li>
+                    <li><a href="vote.html">Résultats précédents</a></li>
+                    <li><a href="vote.html">Règles des battles</a></li>
+                    <li><a href="vote.html">Soumettre un artiste</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="support.html">FAQ</a></li>
+                    <li><a href="support.html">Devenir Premium</a></li>
+                    <li><a href="https://www.patreon.com/gramcharts" target="_blank">Patreon</a></li>
+                    <li><a href="support.html">Conditions d'utilisation</a></li>
+                    <li><a href="support.html">Politique de confidentialité</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 Gramcharts. Tous droits réservés. Site propulsé par <a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">SOCIAL BOOST HORIZON</a>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        mobileMenuBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        document.addEventListener('click', e => {
+            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mainNav.classList.contains('active')) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Système de vote
+        // Nous stockons les votes dans un objet
+        const battles = {
+            1: { competitor1: 1425, competitor2: 1890, selected: null },
+            2: { competitor1: 2105, competitor2: 1780, selected: null },
+            3: { competitor1: 925, competitor2: 1560, selected: null }
+        };
+        
+        function selectCompetitor(battleId, competitorId) {
+            // Réinitialiser la sélection pour cette battle
+            document.querySelectorAll(`.competitor[data-battle="${battleId}"]`).forEach(comp => {
+                comp.classList.remove('selected');
+            });
+            
+            // Sélectionner le compétiteur cliqué
+            const competitor = document.querySelector(`.competitor[data-battle="${battleId}"][data-competitor="${competitorId}"]`);
+            competitor.classList.add('selected');
+            
+            // Enregistrer la sélection
+            battles[battleId].selected = competitorId;
+            
+            // Activer le bouton de vote
+            document.getElementById(`voteBtn${battleId}`).disabled = false;
+        }
+        
+        function vote(battleId) {
+            const battle = battles[battleId];
+            if (battle.selected === 1) {
+                battle.competitor1++;
+                document.getElementById(`votes${battleId}-1`).textContent = battle.competitor1;
+            } else if (battle.selected === 2) {
+                battle.competitor2++;
+                document.getElementById(`votes${battleId}-2`).textContent = battle.competitor2;
+            }
+            
+            // Mettre à jour les pourcentages
+            updateStats(battleId);
+            
+            // Désactiver le bouton après le vote
+            document.getElementById(`voteBtn${battleId}`).disabled = true;
+            
+            // Afficher une notification
+            const artistName = document.querySelector(`.competitor[data-battle="${battleId}"][data-competitor="${battle.selected}"] h3`).textContent;
+            alert(`Votre vote pour ${artistName} a été enregistré !`);
+            
+            // Réinitialiser la sélection
+            battle.selected = null;
+            document.querySelectorAll(`.competitor[data-battle="${battleId}"]`).forEach(comp => {
+                comp.classList.remove('selected');
+            });
+        }
+        
+        function updateStats(battleId) {
+            const battle = battles[battleId];
+            const total = battle.competitor1 + battle.competitor2;
+            let percent1 = 0, percent2 = 0;
+            
+            if (total > 0) {
+                percent1 = Math.round((battle.competitor1 / total) * 100);
+                percent2 = 100 - percent1;
+            }
+            
+            document.getElementById(`percent${battleId}-1`).textContent = `${percent1}%`;
+            document.getElementById(`percent${battleId}-2`).textContent = `${percent2}%`;
+            document.getElementById(`statFill${battleId}`).style.width = `${percent1}%`;
+        }
+        
+        // Newsletter form
+        const newsletterForm = document.getElementById('newsletterForm');
+        const confirmationMessage = document.getElementById('confirmationMessage');
+        
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            
+            // Simulation d'envoi
+            this.style.display = 'none';
+            confirmationMessage.style.display = 'block';
+            
+            // Réinitialiser après 5 secondes
+            setTimeout(() => {
+                this.style.display = 'flex';
+                confirmationMessage.style.display = 'none';
+                this.reset();
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
