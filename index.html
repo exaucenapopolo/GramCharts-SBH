@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gramcharts - Classements musicaux professionnels</title>
+    <meta name="description" content="GramCharts - Découvrez les meilleurs classements musicaux francophones">
+    <meta name="keywords" content="musique, classement, francophone, rap, pop, rnb, streaming">
+    <meta name="author" content="GramCharts">
+    <title>Accueil - Gramcharts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -16,6 +20,7 @@
             --dark-gray: #333333;
             --background: #0A0A1A;
             --card-bg: #121230;
+            --transition: all 0.3s ease;
         }
         
         * {
@@ -30,6 +35,7 @@
             color: var(--light);
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
         }
         
         /* Header Styles */
@@ -55,6 +61,11 @@
             gap: 10px;
             font-size: 1.8rem;
             font-weight: bold;
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: scale(1.03);
         }
         
         .logo span {
@@ -76,7 +87,8 @@
             padding: 5px 0;
         }
         
-        nav a:hover {
+        nav a:hover,
+        nav a.active {
             color: var(--primary);
         }
         
@@ -91,7 +103,8 @@
             transition: width 0.3s;
         }
         
-        nav a:hover::after {
+        nav a:hover::after,
+        nav a.active::after {
             width: 100%;
         }
         
@@ -99,6 +112,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            position: relative;
         }
         
         .search-bar {
@@ -132,6 +146,32 @@
             margin-right: 8px;
         }
         
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .search-suggestion-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-suggestion-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
         .shazam-btn {
             background: rgba(255,255,255,0.1);
             border: none;
@@ -142,7 +182,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: var(--transition);
             color: var(--light);
             font-size: 1.2rem;
         }
@@ -162,13 +202,13 @@
             cursor: pointer;
         }
         
-        /* Hero Section - Correction du chevauchement */
+        /* Hero Section */
         .hero {
             background: linear-gradient(135deg, rgba(30, 30, 60, 0.9), rgba(10, 10, 26, 0.95)), 
-                         url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');
+                        url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');
             background-size: cover;
             background-position: center;
-            height: 500px;
+            height: 350px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -188,8 +228,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, transparent 0%, var(--background) 180%);
-            z-index: 1;
+            background: radial-gradient(circle, transparent 0%, var(--background) 150%);
         }
         
         .hero-content {
@@ -215,71 +254,82 @@
             max-width: 700px;
             color: rgba(255, 255, 255, 0.9);
             line-height: 1.7;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         
-        .hero-buttons {
+        .hero .btn-group {
             display: flex;
-            gap: 15px;
-            justify-content: center;
+            gap: 1rem;
             flex-wrap: wrap;
-            z-index: 2;
-            position: relative;
+            justify-content: center;
         }
         
-        .btn {
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            color: var(--dark);
-            padding: 14px 35px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-        }
-        
-        .btn-outline {
-            background: transparent;
+        .hero .btn {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
             border: 2px solid var(--primary);
+            border-radius: 30px;
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .hero .btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 4rem 5%;
+            background: linear-gradient(to bottom, var(--background), rgba(10, 10, 26, 0.8));
+        }
+        
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
             color: var(--light);
         }
         
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            z-index: -1;
-            transition: opacity 0.3s;
-            opacity: 0;
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
         }
         
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
-        }
-        
-        .btn:hover::before {
-            opacity: 1;
-        }
-        
-        .btn-outline:hover {
-            background: rgba(255, 215, 0, 0.1);
-        }
-        
-        /* Charts Section */
-        .charts-section {
-            padding: 5rem 5%;
+        /* Categories Section */
+        .categories-section {
+            padding: 4rem 5%;
         }
         
         .section-title {
@@ -309,13 +359,13 @@
             z-index: 0;
         }
         
-        .charts-container {
+        .categories-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
         
-        .chart-card {
+        .category-card {
             background-color: var(--card-bg);
             border-radius: 15px;
             overflow: hidden;
@@ -323,338 +373,226 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             border: 1px solid rgba(255, 215, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            animation: fadeIn 0.6s ease-out forwards;
-            opacity: 0;
         }
         
-        .chart-card:nth-child(1) { animation-delay: 0.1s; }
-        .chart-card:nth-child(2) { animation-delay: 0.2s; }
-        .chart-card:nth-child(3) { animation-delay: 0.3s; }
-        .chart-card:nth-child(4) { animation-delay: 0.4s; }
-        .chart-card:nth-child(5) { animation-delay: 0.5s; }
-        .chart-card:nth-child(6) { animation-delay: 0.6s; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: rgba(255, 215, 0, 0.3);
         }
         
-        .chart-illustration {
+        .category-image {
             height: 180px;
             background-size: cover;
             background-position: center;
             position: relative;
         }
         
-        .chart-illustration::after {
+        .category-image::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 60%;
+            height: 100%;
             background: linear-gradient(to top, var(--card-bg), transparent);
         }
         
-        .chart-header {
+        .category-header {
             background: rgba(30, 144, 255, 0.15);
             color: var(--light);
             padding: 1.5rem;
             text-align: center;
-            position: relative;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
         
-        .chart-header h3 {
+        .category-header h3 {
             font-size: 1.4rem;
             margin: 0;
-            flex: 1;
-            text-align: left;
         }
         
-        .chart-header i {
-            transition: transform 0.3s;
+        .category-header i {
             font-size: 1.2rem;
             color: var(--primary);
+            transition: transform 0.3s;
         }
         
-        .chart-content {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease, padding 0.5s ease;
-        }
-        
-        .chart-card.expanded .chart-content {
-            max-height: 1000px;
+        .category-content {
+            display: none;
             padding: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
-        .chart-card.expanded .chart-header i {
-            transform: rotate(180deg);
+        .category-content p {
+            margin-bottom: 1rem;
         }
         
-        .chart-list {
-            list-style: none;
-        }
-        
-        .chart-list li {
-            padding: 14px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.2s;
-        }
-        
-        .chart-list li:hover {
-            background: rgba(255,255,255,0.05);
-        }
-        
-        .chart-list li:last-child {
-            border-bottom: none;
-        }
-        
-        .position {
-            font-weight: bold;
-            color: var(--primary);
-            width: 30px;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-        
-        .song-info {
-            flex: 1;
-            padding: 0 15px;
-        }
-        
-        .song-title {
-            font-weight: 600;
-            font-size: 1.05rem;
-        }
-        
-        .artist {
+        .category-content .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
             font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
-            margin-top: 4px;
         }
         
         .premium-banner {
             background: linear-gradient(to right, var(--primary), var(--accent));
             color: var(--dark);
-            padding: 1rem;
+            padding: 1.5rem;
             text-align: center;
-            margin-top: 1.5rem;
-            border-radius: 8px;
+            margin-top: 2rem;
+            border-radius: 10px;
             font-weight: bold;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
         }
         
         .premium-banner a {
             color: var(--dark);
             text-decoration: none;
-            font-weight: bold;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .premium-banner::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.2);
-            transform: translateX(-100%);
-            transition: transform 0.3s;
-        }
-        
-        .premium-banner:hover::after {
-            transform: translateX(0);
-        }
-        
-        /* Search Results */
-        .search-results {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1.5rem 5%;
-            display: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 500;
-        }
-        
-        .search-results.active {
-            display: block;
-        }
-        
-        .search-results h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-        
-        .result-item {
-            padding: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-        }
-        
-        .result-item:last-child {
-            border-bottom: none;
-        }
-        
-        .result-position {
-            color: var(--primary);
-            font-weight: bold;
-            width: 30px;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-        
-        .result-info {
-            flex: 1;
-            padding: 0 15px;
-        }
-        
-        .result-song-title {
             font-weight: 600;
+            background: var(--dark);
+            color: var(--primary);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            transition: var(--transition);
         }
         
-        .result-artist {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
-            margin-top: 4px;
-        }
-        
-        .result-chart {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.7);
-            text-align: right;
-            width: 200px;
-        }
-        
-        /* Shazam Modal - Correction de la visibilité */
-        .shazam-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .premium-banner a:hover {
             background: rgba(0,0,0,0.8);
+            transform: scale(1.05);
+        }
+        
+        /* Featured Artists */
+        .artists-section {
+            padding: 4rem 5%;
+            background: linear-gradient(to bottom, rgba(10, 10, 26, 0.8), var(--background));
+        }
+        
+        .artists-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) var(--background);
         }
         
-        .shazam-modal.active {
-            opacity: 1;
-            visibility: visible;
+        .artists-container::-webkit-scrollbar {
+            height: 8px;
         }
         
-        .shazam-content {
+        .artists-container::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        
+        .artists-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        .artist-card {
+            flex: 0 0 250px;
             background: var(--card-bg);
             border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: var(--transition);
         }
         
-        .shazam-content h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
+        .artist-card:hover {
+            transform: translateY(-10px);
         }
         
-        .shazam-wave {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            height: 120px;
-            margin: 30px 0;
-        }
-        
-        .wave-bar {
-            width: 10px;
-            height: 10px;
-            background: var(--primary);
-            margin: 0 3px;
-            border-radius: 5px;
-            animation: wave 1.2s ease-in-out infinite;
-        }
-        
-        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
-        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
-        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
-        .wave-bar:nth-child(5) { animation-delay: 0.4s; }
-        .wave-bar:nth-child(6) { animation-delay: 0.5s; }
-        .wave-bar:nth-child(7) { animation-delay: 0.6s; }
-        .wave-bar:nth-child(8) { animation-delay: 0.7s; }
-        
-        .shazam-result {
-            margin: 20px 0;
-            padding: 20px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-            display: none;
-        }
-        
-        .shazam-result.active {
-            display: block;
-        }
-        
-        .shazam-album-cover {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
+        .artist-image {
+            height: 200px;
             background-size: cover;
             background-position: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
         }
         
-        .shazam-song-title {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
+        .artist-info {
+            padding: 1.5rem;
+            text-align: center;
         }
         
-        .shazam-artist {
-            font-size: 1.1rem;
+        .artist-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .artist-info p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .artist-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: bold;
             color: var(--primary);
-            margin-bottom: 15px;
+            font-size: 1.2rem;
         }
         
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: transparent;
+        .stat-label {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        /* Newsletter */
+        .newsletter-section {
+            padding: 4rem 5%;
+            background: linear-gradient(45deg, rgba(30, 144, 255, 0.1), rgba(255, 215, 0, 0.1));
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
             border: none;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
             color: var(--light);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: color 0.3s;
+            font-size: 1rem;
         }
         
-        .close-modal:hover {
-            color: var(--primary);
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .newsletter-form button {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            border-radius: 30px;
+            padding: 0 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .newsletter-form button:hover {
+            background: #ffc800;
+            transform: scale(1.05);
         }
         
         /* Footer */
@@ -737,7 +675,7 @@
             height: 40px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
-            transition: all 0.3s;
+            transition: var(--transition);
             color: var(--light);
         }
         
@@ -767,7 +705,245 @@
             text-decoration: underline;
         }
         
-        /* Responsive Design */
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(30, 30, 60, 0.95);
+            padding: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            z-index: 999;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+            border-top: 1px solid var(--primary);
+        }
+        
+        .cookie-banner.visible {
+            transform: translateY(0);
+        }
+        
+        .cookie-content {
+            max-width: 800px;
+        }
+        
+        .cookie-banner p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .cookie-banner a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .cookie-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .cookie-btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .cookie-btn.accept {
+            background: var(--primary);
+            color: var(--dark);
+        }
+        
+        .cookie-btn.decline {
+            background: transparent;
+            color: var(--light);
+            border: 1px solid var(--light);
+        }
+        
+        .cookie-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Player */
+        .music-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(18, 18, 48, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 900;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .music-player.visible {
+            transform: translateY(0);
+        }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 30%;
+        }
+        
+        .player-thumbnail {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background-size: cover;
+        }
+        
+        .player-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .player-details h4 {
+            font-size: 1.1rem;
+        }
+        
+        .player-details p {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        .player-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 40%;
+        }
+        
+        .player-buttons {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .player-btn {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .player-btn.play {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        
+        .player-btn:hover {
+            color: var(--primary);
+        }
+        
+        .player-progress {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .progress-time {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+            min-width: 40px;
+        }
+        
+        .progress-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .player-volume {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 20%;
+        }
+        
+        .volume-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .volume-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 70%;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        /* Responsive */
         @media (max-width: 900px) {
             nav {
                 position: fixed;
@@ -792,12 +968,6 @@
                 gap: 1.5rem;
             }
             
-            .search-container {
-                width: 100%;
-                justify-content: center;
-                margin-top: 20px;
-            }
-            
             .search-bar {
                 width: 100%;
                 max-width: 400px;
@@ -809,26 +979,39 @@
             }
             
             .hero {
-                height: 400px;
+                height: 280px;
+                margin-top: 70px;
             }
             
             .hero h1 {
                 font-size: 2.8rem;
             }
             
-            .hero-content {
-                padding: 15px;
-                margin: 0 15px;
+            .categories-container {
+                grid-template-columns: 1fr;
             }
             
-            .charts-container {
-                grid-template-columns: 1fr;
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .player-info {
+                width: 40%;
+            }
+            
+            .player-controls {
+                width: 60%;
+            }
+            
+            .player-volume {
+                display: none;
             }
         }
         
         @media (max-width: 600px) {
             .hero {
-                height: 350px;
+                height: 220px;
+                margin-top: 60px;
             }
             
             .hero h1 {
@@ -839,35 +1022,21 @@
                 font-size: 1rem;
             }
             
-            .section-title h2 {
-                font-size: 2rem;
-            }
-            
-            .logo div {
-                font-size: 1.5rem;
-            }
-            
             .search-bar {
                 width: 180px;
             }
             
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
+            .player-info {
+                width: 50%;
             }
             
-            .shazam-content {
-                padding: 1.5rem;
+            .player-controls {
+                width: 50%;
             }
             
-            .shazam-content h2 {
-                font-size: 1.6rem;
+            .player-buttons {
+                gap: 1rem;
             }
-        }
-        
-        @keyframes wave {
-            0%, 100% { height: 10px; }
-            50% { height: 60px; }
         }
     </style>
 </head>
@@ -892,6 +1061,9 @@
                 <i class="fas fa-search"></i>
                 <input type="text" id="searchInput" placeholder="Rechercher un artiste, une chanson...">
             </div>
+            <div class="search-suggestions" id="searchSuggestions">
+                <!-- Suggestions will be added dynamically -->
+            </div>
             <button class="shazam-btn" id="shazamBtn" title="Reconnaître une musique">
                 <i class="fas fa-music"></i>
             </button>
@@ -901,210 +1073,233 @@
         </button>
     </header>
 
-    <!-- Hero Section - Correction du chevauchement -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Découvrez les classements musicaux du moment</h1>
-            <p>Gramcharts vous propose les charts les plus populaires de la musique francophone. Restez à jour avec les hits du moment et découvrez les nouvelles tendances.</p>
-            <div class="hero-buttons">
+            <h1>Bienvenue sur GramCharts</h1>
+            <p>Découvrez en un clin d’œil les meilleurs classements musicaux par genre et popularité.</p>
+            <div class="btn-group">
                 <a href="classements.html" class="btn">Voir les classements</a>
-                <a href="#" class="btn btn-outline">Devenir Premium</a>
+                <a href="https://www.patreon.com/gramcharts" target="_blank" class="btn">S'abonner</a>
             </div>
         </div>
     </section>
 
-    <!-- Search Results - Correction de la recherche -->
-    <div class="search-results" id="searchResults">
-        <h3>Résultats de recherche</h3>
-        <div id="resultsContainer"></div>
-    </div>
-
-    <!-- Charts Section -->
-    <section class="charts-section">
+    <!-- Features Section -->
+    <section class="features-section">
         <div class="section-title">
-            <h2>Classements Populaires</h2>
+            <h2>Pourquoi GramCharts ?</h2>
         </div>
-        
-        <div class="charts-container">
-            <!-- Chart 1 - Ajout de chansons francophones pour la recherche -->
-            <div class="chart-card" data-genre="pop">
-                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header" onclick="toggleChart(this)">
-                    <h3>Gram Top 50 Pop Francophone globale</h3>
+        <div class="features-container">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Classements en temps réel</h3>
+                <p>Accédez aux classements mis à jour quotidiennement basés sur les plateformes de streaming.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-microphone-alt"></i>
+                </div>
+                <h3>Artistes francophones</h3>
+                <p>Découvrez la scène musicale francophone et ses talents émergents ou établis.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-sliders-h"></i>
+                </div>
+                <h3>Personnalisation</h3>
+                <p>Créez vos propres classements et listes de lecture selon vos préférences musicales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="section-title">
+            <h2>Nos catégories</h2>
+        </div>
+        <div class="categories-container">
+            <!-- Exemple de catégorie -->
+            <div class="category-card">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');"></div>
+                <div class="category-header">
+                    <h3>Gram Top 50 Pop Francophone</h3>
                     <i class="fas fa-chevron-down"></i>
                 </div>
-                <div class="chart-content">
-                    <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Je t'aime</div><div class="artist">Lara Fabian</div></div></li>
-                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">Flowers</div><div class="artist">Miley Cyrus</div></div></li>
-                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">Kill Bill</div><div class="artist">SZA</div></div></li>
-                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">Calm Down</div><div class="artist">Rema & Selena Gomez</div></div></li>
-                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">La vie en rose</div><div class="artist">Édith Piaf</div></div></li>
-                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">As It Was</div><div class="artist">Harry Styles</div></div></li>
-                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">La Bachata</div><div class="artist">Manuel Turizo</div></div></li>
-                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">Anti-Hero</div><div class="artist">Taylor Swift</div></div></li>
-                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Unholy</div><div class="artist">Sam Smith & Kim Petras</div></div></li>
-                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">I'm Good (Blue)</div><div class="artist">David Guetta & Bebe Rexha</div></div></li>
-                    </ul>
-                    <div class="premium-banner">
-                        Pour découvrir le classement complet (Top 11 à 50), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
-                    </div>
+                <div class="category-content">
+                    <p>Explorez le classement des 50 titres pop francophones les plus écoutés.</p>
+                    <a href="classements.html#pop" class="btn">Voir ce classement</a>
                 </div>
             </div>
-            
-            <!-- Chart 2 -->
-            <div class="chart-card" data-genre="new">
-                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header" onclick="toggleChart(this)">
+            <div class="category-card">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');"></div>
+                <div class="category-header">
                     <h3>Gram Top 30 Nouvelle Génération</h3>
                     <i class="fas fa-chevron-down"></i>
                 </div>
-                <div class="chart-content">
-                    <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Dance The Night</div><div class="artist">Dua Lipa</div></div></li>
-                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">TQG</div><div class="artist">KAROL G, Shakira</div></div></li>
-                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">Cupid</div><div class="artist">FIFTY FIFTY</div></div></li>
-                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">Boy's a liar Pt. 2</div><div class="artist">PinkPantheress, Ice Spice</div></div></li>
-                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">Ella Baila Sola</div><div class="artist">Eslabon Armado, Peso Pluma</div></div></li>
-                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">Karma</div><div class="artist">Taylor Swift ft. Ice Spice</div></div></li>
-                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Sprinter</div><div class="artist">Dave & Central Cee</div></div></li>
-                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">vampire</div><div class="artist">Olivia Rodrigo</div></div></li>
-                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Cruel Summer</div><div class="artist">Taylor Swift</div></div></li>
-                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">What It Is (Solo Version)</div><div class="artist">Doechii</div></div></li>
-                    </ul>
-                    <div class="premium-banner">
-                        Pour découvrir le classement complet (Top 11 à 30), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
+                <div class="category-content">
+                    <p>Les morceaux qui redéfinissent la scène musicale actuelle.</p>
+                    <a href="classements.html#new" class="btn">Voir ce classement</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1619983081563-430f63602b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');"></div>
+                <div class="category-header">
+                    <h3>Gram Top Streaming Pop</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="category-content">
+                    <p>Les titres pop francophones les plus streamés du moment.</p>
+                    <a href="classements.html#streaming" class="btn">Voir ce classement</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');"></div>
+                <div class="category-header">
+                    <h3>Gram Top Rap Francophone</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="category-content">
+                    <p>Le Top 10 des titres rap francophones en vogue.</p>
+                    <a href="classements.html#rap" class="btn">Voir ce classement</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');"></div>
+                <div class="category-header">
+                    <h3>Gram Top RnB Francophone</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="category-content">
+                    <p>Le Top 10 des meilleures chansons RnB francophones.</p>
+                    <a href="classements.html#rnb" class="btn">Voir ce classement</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');"></div>
+                <div class="category-header">
+                    <h3>Gram Top Hip-Hop/RnB</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="category-content">
+                    <p>Top 50 combiné Hip-Hop et RnB francophones.</p>
+                    <a href="classements.html#hiphop" class="btn">Voir ce classement</a>
+                </div>
+            </div>
+        </div>
+        <div class="premium-banner">
+            <p>Pour découvrir d'autres catégories et contenus exclusifs</p>
+            <a href="https://www.patreon.com/gramcharts" target="_blank">Regarder la suite</a>
+        </div>
+    </section>
+
+    <!-- Featured Artists Section -->
+    <section class="artists-section">
+        <div class="section-title">
+            <h2>Artistes en vedette</h2>
+        </div>
+        <div class="artists-container">
+            <div class="artist-card">
+                <div class="artist-image" style="background-image: url('https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="artist-info">
+                    <h3>Damso</h3>
+                    <p>Rap/Hip-Hop</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-value">#1</div>
+                            <div class="stat-label">Classement</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">3.2M</div>
+                            <div class="stat-label">Streams</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Chart 3 -->
-            <div class="chart-card" data-genre="streaming">
-                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1619983081563-430f63602b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header" onclick="toggleChart(this)">
-                    <h3>Gram Top Streaming Pop Francophone</h3>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="chart-content">
-                    <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Seven</div><div class="artist">Jung Kook ft. Latto</div></div></li>
-                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">Daylight</div><div class="artist">David Kushner</div></div></li>
-                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">Last Night</div><div class="artist">Morgan Wallen</div></div></li>
-                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">Fast Car</div><div class="artist">Luke Combs</div></div></li>
-                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">Fukumean</div><div class="artist">Gunna</div></div></li>
-                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">All My Life</div><div class="artist">Lil Durk ft. J. Cole</div></div></li>
-                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Barbie World</div><div class="artist">Nicki Minaj & Ice Spice</div></div></li>
-                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">Snooze</div><div class="artist">SZA</div></div></li>
-                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Popular</div><div class="artist">The Weeknd, Madonna</div></div></li>
-                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">WHERE SHE GOES</div><div class="artist">Bad Bunny</div></div></li>
-                    </ul>
-                    <div class="premium-banner">
-                        Pour découvrir le classement complet (Top 11 à 50), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
+            <div class="artist-card">
+                <div class="artist-image" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="artist-info">
+                    <h3>Angèle</h3>
+                    <p>Pop</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-value">#2</div>
+                            <div class="stat-label">Classement</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">2.8M</div>
+                            <div class="stat-label">Streams</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Chart 4 -->
-            <div class="chart-card" data-genre="rap">
-                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header" onclick="toggleChart(this)">
-                    <h3>Gram Top Rap 10 Francophone globale</h3>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="chart-content">
-                    <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Paint The Town Red</div><div class="artist">Doja Cat</div></div></li>
-                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">fukumean</div><div class="artist">Gunna</div></div></li>
-                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">Sprinter</div><div class="artist">Dave & Central Cee</div></div></li>
-                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">SkeeYee</div><div class="artist">Sexyy Red</div></div></li>
-                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">All My Life</div><div class="artist">Lil Durk ft. J. Cole</div></div></li>
-                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">Put It On Da Floor Again</div><div class="artist">Latto ft. Cardi B</div></div></li>
-                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Just Wanna Rock</div><div class="artist">Lil Uzi Vert</div></div></li>
-                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">Peaches & Eggplants</div><div class="artist">Young Nudy ft. 21 Savage</div></div></li>
-                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Search & Rescue</div><div class="artist">Drake</div></div></li>
-                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">Private Landing</div><div class="artist">Don Toliver ft. Future</div></div></li>
-                    </ul>
+            <div class="artist-card">
+                <div class="artist-image" style="background-image: url('https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="artist-info">
+                    <h3>Stromae</h3>
+                    <p>Electro-pop</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-value">#3</div>
+                            <div class="stat-label">Classement</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">2.5M</div>
+                            <div class="stat-label">Streams</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Chart 5 -->
-            <div class="chart-card" data-genre="rnb">
-                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1487180144351-b8472da7d491?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header" onclick="toggleChart(this)">
-                    <h3>Gram Top RnB 10 Francophone globale</h3>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="chart-content">
-                    <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Snooze</div><div class="artist">SZA</div></div></li>
-                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">Kill Bill</div><div class="artist">SZA</div></div></li>
-                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">CUFF IT</div><div class="artist">Beyoncé</div></div></li>
-                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">Under The Influence</div><div class="artist">Chris Brown</div></div></li>
-                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">Die For You</div><div class="artist">The Weeknd</div></div></li>
-                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">Creepin'</div><div class="artist">Metro Boomin</div></div></li>
-                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Sure Thing</div><div class="artist">Miguel</div></div></li>
-                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">ICU</div><div class="artist">Coco Jones</div></div></li>
-                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Players</div><div class="artist">Coi Leray</div></div></li>
-                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">Love Language</div><div class="artist">SZA</div></div></li>
-                    </ul>
+            <div class="artist-card">
+                <div class="artist-image" style="background-image: url('https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="artist-info">
+                    <h3>Lous and The Yakuza</h3>
+                    <p>RnB</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-value">#4</div>
+                            <div class="stat-label">Classement</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1.9M</div>
+                            <div class="stat-label">Streams</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <!-- Chart 6 -->
-            <div class="chart-card" data-genre="hiphop">
-                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="chart-header" onclick="toggleChart(this)">
-                    <h3>Gram Top 50 Hip-Hop/RnB Francophone</h3>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="chart-content">
-                    <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Last Night</div><div class="artist">Morgan Wallen</div></div></li>
-                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">Fast Car</div><div class="artist">Luke Combs</div></div></li>
-                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">Need a Favor</div><div class="artist">Jelly Roll</div></div></li>
-                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">Thinkin' Bout Me</div><div class="artist">Morgan Wallen</div></div></li>
-                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">Something in the Orange</div><div class="artist">Zach Bryan</div></div></li>
-                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">You Proof</div><div class="artist">Morgan Wallen</div></div></li>
-                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Heart Like A Truck</div><div class="artist">Lainey Wilson</div></div></li>
-                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">Thank God</div><div class="artist">Kane Brown, Katelyn Brown</div></div></li>
-                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Love You Anyway</div><div class="artist">Luke Combs</div></div></li>
-                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">Dancin' In The Country</div><div class="artist">Tyler Hubbard</div></div></li>
-                    </ul>
-                    <div class="premium-banner">
-                        Pour découvrir le classement complet (Top 11 à 50), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
+            <div class="artist-card">
+                <div class="artist-image" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="artist-info">
+                    <h3>PNL</h3>
+                    <p>Rap</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-value">#5</div>
+                            <div class="stat-label">Classement</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">1.7M</div>
+                            <div class="stat-label">Streams</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Shazam Modal -->
-    <div class="shazam-modal" id="shazamModal">
-        <div class="shazam-content">
-            <button class="close-modal" id="closeModal">&times;</button>
-            <h2>Recherche de musique</h2>
-            <div class="shazam-wave">
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-            </div>
-            <p>Écoutez une musique pour la reconnaître...</p>
-            
-            <div class="shazam-result" id="shazamResult">
-                <div class="shazam-album-cover" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');"></div>
-                <div class="shazam-song-title" id="shazamSongTitle">Titre de la chanson</div>
-                <div class="shazam-artist" id="shazamArtist">Artiste</div>
-                <p>Cette musique a été identifiée avec succès !</p>
-            </div>
-            
-            <button class="btn" id="startShazam">Commencer l'écoute</button>
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="section-title">
+            <h2>Restez informé</h2>
         </div>
-    </div>
+        <p>Inscrivez-vous à notre newsletter pour recevoir les classements hebdomadaires et les dernières actualités musicales.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Votre adresse email" required>
+            <button type="submit">S'abonner</button>
+        </form>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -1134,9 +1329,9 @@
             <div class="footer-column">
                 <h3>À PROPOS</h3>
                 <ul>
-                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">Notre équipe</a></li>
+                    <li><a href="apropos.html">Notre équipe</a></li>
                     <li><a href="apropos.html">Méthodologie</a></li>
-                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">Partenaires</a></li>
+                    <li><a href="apropos.html">Partenaires</a></li>
                     <li><a href="apropos.html">Carrières</a></li>
                     <li><a href="apropos.html">Contact</a></li>
                 </ul>
@@ -1153,190 +1348,315 @@
             </div>
         </div>
         <div class="copyright">
-            &copy; 2023 Gramcharts. Tous droits réservés. Les classements sont mis à jour chaque semaine. Site propulsé par <a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">SOCIAL BOOST HORIZON</a>
+            &copy; 2025 Gramcharts. Tous droits réservés. Site propulsé par <a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">SOCIAL BOOST HORIZON</a>
         </div>
     </footer>
 
+    <!-- Back to top button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Music Player -->
+    <div class="music-player" id="musicPlayer">
+        <div class="player-info">
+            <div class="player-thumbnail" id="playerThumbnail"></div>
+            <div class="player-details">
+                <h4 id="playerTitle">Titre de la chanson</h4>
+                <p id="playerArtist">Artiste</p>
+            </div>
+        </div>
+        <div class="player-controls">
+            <div class="player-buttons">
+                <button class="player-btn" id="prevBtn"><i class="fas fa-step-backward"></i></button>
+                <button class="player-btn play" id="playBtn"><i class="fas fa-play"></i></button>
+                <button class="player-btn" id="nextBtn"><i class="fas fa-step-forward"></i></button>
+            </div>
+            <div class="player-progress">
+                <div class="progress-time" id="currentTime">0:00</div>
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-time" id="totalTime">0:00</div>
+            </div>
+        </div>
+        <div class="player-volume">
+            <button class="player-btn"><i class="fas fa-volume-up"></i></button>
+            <div class="volume-bar" id="volumeBar">
+                <div class="volume-fill" id="volumeFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <p>Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant à naviguer, vous acceptez notre <a href="support.html">politique de cookies</a>.</p>
+        </div>
+        <div class="cookie-buttons">
+            <button class="cookie-btn accept" id="acceptCookies">Accepter</button>
+            <button class="cookie-btn decline" id="declineCookies">Refuser</button>
+        </div>
+    </div>
+
     <script>
-        // Fonction pour déplier/replier les classements
-        function toggleChart(header) {
-            const card = header.parentElement;
-            const isExpanded = card.classList.contains('expanded');
-            
-            // Fermer toutes les cartes d'abord
-            document.querySelectorAll('.chart-card.expanded').forEach(otherCard => {
-                if (otherCard !== card) {
-                    otherCard.classList.remove('expanded');
-                }
-            });
-            
-            // Ouvrir/fermer la carte sélectionnée
-            if (isExpanded) {
-                card.classList.remove('expanded');
-            } else {
-                card.classList.add('expanded');
-            }
-        }
-        
-        // Recherche fonctionnelle - CORRIGÉE
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
-        const resultsContainer = document.getElementById('resultsContainer');
-        
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase().trim();
-            
-            if (searchTerm.length < 2) {
-                searchResults.classList.remove('active');
-                resultsContainer.innerHTML = '';
-                return;
-            }
-            
-            // Recherche dans tous les classements
-            let resultsHTML = '';
-            let resultCount = 0;
-            
-            document.querySelectorAll('.chart-card').forEach(card => {
-                const chartTitle = card.querySelector('.chart-header h3').textContent;
-                let chartResults = '';
-                
-                card.querySelectorAll('.chart-list li').forEach(item => {
-                    const songTitle = item.querySelector('.song-title').textContent.toLowerCase();
-                    const artist = item.querySelector('.artist').textContent.toLowerCase();
-                    const position = item.querySelector('.position').textContent;
-                    
-                    if (songTitle.includes(searchTerm) || artist.includes(searchTerm)) {
-                        chartResults += `
-                            <div class="result-item">
-                                <div class="result-position">${position}</div>
-                                <div class="result-info">
-                                    <div class="result-song-title">${item.querySelector('.song-title').textContent}</div>
-                                    <div class="result-artist">${item.querySelector('.artist').textContent}</div>
-                                </div>
-                                <div class="result-chart">${chartTitle}</div>
-                            </div>
-                        `;
-                        resultCount++;
-                    }
-                });
-                
-                if (chartResults) {
-                    resultsHTML += `
-                        <div class="chart-results">
-                            <h4>${chartTitle}</h4>
-                            ${chartResults}
-                        </div>
-                    `;
-                }
-            });
-            
-            if (resultCount > 0) {
-                resultsContainer.innerHTML = resultsHTML;
-                searchResults.classList.add('active');
-            } else {
-                resultsContainer.innerHTML = '<p style="text-align: center; padding: 20px;">Aucun résultat trouvé</p>';
-                searchResults.classList.add('active');
-            }
-        });
-        
-        // Menu mobile amélioré
+        // Mobile menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
-        
-        mobileMenuBtn.addEventListener('click', function(e) {
+        mobileMenuBtn.addEventListener('click', e => {
             e.stopPropagation();
             mainNav.classList.toggle('active');
-            this.innerHTML = mainNav.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : 
-                '<i class="fas fa-bars"></i>';
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
         });
-        
-        // Fermer le menu si on clique à l'extérieur
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', e => {
             if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mainNav.classList.contains('active')) {
                 mainNav.classList.remove('active');
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             }
         });
-        
-        // Fermer le menu si on clique sur un lien
-        document.querySelectorAll('#mainNav a').forEach(link => {
-            link.addEventListener('click', function() {
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
                 mainNav.classList.remove('active');
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
+
+        // Collapsible categories
+        document.querySelectorAll('.category-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('i');
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                icon.style.transform = content.style.display === 'block' ? 'rotate(180deg)' : 'rotate(0)';
+            });
+        });
         
-        // Fonctionnalité Shazam
-        const shazamBtn = document.getElementById('shazamBtn');
-        const shazamModal = document.getElementById('shazamModal');
-        const closeModal = document.getElementById('closeModal');
-        const startShazam = document.getElementById('startShazam');
-        const shazamResult = document.getElementById('shazamResult');
-        const shazamSongTitle = document.getElementById('shazamSongTitle');
-        const shazamArtist = document.getElementById('shazamArtist');
-        
-        // Liste de chansons pour la simulation Shazam
-        const songs = [
-            { title: "Je t'aime", artist: "Lara Fabian", cover: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-            { title: "Flowers", artist: "Miley Cyrus", cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-            { title: "Kill Bill", artist: "SZA", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-            { title: "Calm Down", artist: "Rema & Selena Gomez", cover: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
-            { title: "Creepin'", artist: "Metro Boomin", cover: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" }
+        // Search suggestions
+        const searchInput = document.getElementById('searchInput');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+        const suggestions = [
+            "Angèle - Démons",
+            "Stromae - Santé",
+            "Damso - Mosaïque Solitaire",
+            "PNL - Au DD",
+            "Lous and The Yakuza - Dilemme",
+            "Orelsan - L'odeur de l'essence",
+            "Jul - La machine",
+            "Soprano - En feu",
+            "Ninho - Jefe",
+            "Aya Nakamura - Doudou"
         ];
         
-        shazamBtn.addEventListener('click', function() {
-            shazamModal.classList.add('active');
-            shazamResult.classList.remove('active');
-        });
-        
-        closeModal.addEventListener('click', function() {
-            shazamModal.classList.remove('active');
-        });
-        
-        startShazam.addEventListener('click', function() {
-            // Simulation de l'écoute
-            startShazam.textContent = "Écoute en cours...";
-            startShazam.disabled = true;
+        searchInput.addEventListener('input', () => {
+            const value = searchInput.value.toLowerCase();
+            searchSuggestions.innerHTML = '';
             
-            // Simulation de la reconnaissance après 3 secondes
-            setTimeout(() => {
-                const randomSong = songs[Math.floor(Math.random() * songs.length)];
-                shazamSongTitle.textContent = randomSong.title;
-                shazamArtist.textContent = randomSong.artist;
-                document.querySelector('.shazam-album-cover').style.backgroundImage = `url('${randomSong.cover}')`;
-                shazamResult.classList.add('active');
+            if (value.length > 1) {
+                const filtered = suggestions.filter(item => 
+                    item.toLowerCase().includes(value)
+                );
                 
-                startShazam.textContent = "Recommencer";
-                startShazam.disabled = false;
-            }, 3000);
-        });
-        
-        // Fermer la modal si on clique en dehors
-        window.addEventListener('click', function(e) {
-            if (e.target === shazamModal) {
-                shazamModal.classList.remove('active');
+                if (filtered.length > 0) {
+                    filtered.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'search-suggestion-item';
+                        div.textContent = item;
+                        div.addEventListener('click', () => {
+                            searchInput.value = item;
+                            searchSuggestions.style.display = 'none';
+                        });
+                        searchSuggestions.appendChild(div);
+                    });
+                    searchSuggestions.style.display = 'block';
+                } else {
+                    searchSuggestions.style.display = 'none';
+                }
+            } else {
+                searchSuggestions.style.display = 'none';
             }
         });
         
-        // Animation des cartes au défilement
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animation du bouton
-            const btn = document.querySelector('.btn');
-            btn.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
+        document.addEventListener('click', (e) => {
+            if (!searchSuggestions.contains(e.target) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+        
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
+        });
+        
+        // Cookie banner
+        const cookieBanner = document.getElementById('cookieBanner');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieBanner.classList.add('visible');
+            }, 3000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.classList.remove('visible');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            cookieBanner.classList.remove('visible');
+        });
+        
+        // Music player
+        const musicPlayer = document.getElementById('musicPlayer');
+        const playerThumbnail = document.getElementById('playerThumbnail');
+        const playerTitle = document.getElementById('playerTitle');
+        const playerArtist = document.getElementById('playerArtist');
+        const playBtn = document.getElementById('playBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressFill = document.getElementById('progressFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const totalTimeEl = document.getElementById('totalTime');
+        
+        // Sample music data
+        const tracks = [
+            {
+                title: "Démons",
+                artist: "Angèle ft. Damso",
+                thumbnail: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                duration: 220 // seconds
+            },
+            {
+                title: "Santé",
+                artist: "Stromae",
+                thumbnail: "https://images.unsplash.com/photo-1507838153414-b4b713384a76?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                duration: 195
+            },
+            {
+                title: "Mosaïque Solitaire",
+                artist: "Damso",
+                thumbnail: "https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+                duration: 210
+            }
+        ];
+        
+        let currentTrack = 0;
+        let isPlaying = false;
+        
+        // Initialize player
+        function loadTrack(index) {
+            const track = tracks[index];
+            playerThumbnail.style.backgroundImage = `url('${track.thumbnail}')`;
+            playerTitle.textContent = track.title;
+            playerArtist.textContent = track.artist;
             
-            btn.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
+            // Format duration
+            const minutes = Math.floor(track.duration / 60);
+            const seconds = track.duration % 60;
+            totalTimeEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
             
-            // Fermer les résultats de recherche si on clique ailleurs
-            document.addEventListener('click', function(e) {
-                if (!searchResults.contains(e.target) && !searchInput.contains(e.target)) {
-                    searchResults.classList.remove('active');
+            // Show player
+            musicPlayer.classList.add('visible');
+        }
+        
+        playBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playBtn.querySelector('i').className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+            
+            if (isPlaying) {
+                // Simulate playing
+                simulatePlayback();
+            }
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+            loadTrack(currentTrack);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentTrack = (currentTrack + 1) % tracks.length;
+            loadTrack(currentTrack);
+        });
+        
+        // Simulate playback progress
+        function simulatePlayback() {
+            if (!isPlaying) return;
+            
+            const trackDuration = tracks[currentTrack].duration;
+            let currentTime = 0;
+            
+            const interval = setInterval(() => {
+                if (!isPlaying) {
+                    clearInterval(interval);
+                    return;
                 }
-            });
+                
+                currentTime++;
+                const progress = (currentTime / trackDuration) * 100;
+                progressFill.style.width = `${progress}%`;
+                
+                // Format current time
+                const minutes = Math.floor(currentTime / 60);
+                const seconds = currentTime % 60;
+                currentTimeEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                if (currentTime >= trackDuration) {
+                    clearInterval(interval);
+                    isPlaying = false;
+                    playBtn.querySelector('i').className = 'fas fa-play';
+                    progressFill.style.width = '0%';
+                    currentTimeEl.textContent = '0:00';
+                }
+            }, 1000);
+        }
+        
+        // Click on progress bar to seek
+        progressBar.addEventListener('click', (e) => {
+            if (!isPlaying) return;
+            
+            const width = progressBar.clientWidth;
+            const clickX = e.offsetX;
+            const percentage = (clickX / width) * 100;
+            progressFill.style.width = `${percentage}%`;
+            
+            // Update current time display
+            const trackDuration = tracks[currentTrack].duration;
+            const currentTime = Math.floor((percentage / 100) * trackDuration);
+            const minutes = Math.floor(currentTime / 60);
+            const seconds = currentTime % 60;
+            currentTimeEl.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        });
+        
+        // Initialize the player with first track
+        loadTrack(0);
+        
+        // Shazam button effect
+        const shazamBtn = document.getElementById('shazamBtn');
+        shazamBtn.addEventListener('click', () => {
+            shazamBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+            
+            setTimeout(() => {
+                shazamBtn.innerHTML = '<i class="fas fa-music"></i>';
+                alert("Musique reconnue : Angèle - Démons");
+            }, 2000);
         });
     </script>
 </body>
