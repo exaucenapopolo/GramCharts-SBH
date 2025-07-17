@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classements - Gramcharts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FFD700; /* Jaune */
+            --secondary: #1E90FF; /* Bleu */
+            --accent: #FF6B6B; /* Rouge */
+            --dark: #000000; /* Noir */
+            --light: #FFFFFF; /* Blanc */
+            --gray: #F5F5F5;
+            --dark-gray: #333333;
+            --background: #0A0A1A;
+            --card-bg: #121230;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(10, 10, 26, 0.95);
+            color: var(--light);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            height: 80px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        
+        .search-bar:focus-within {
+            border-color: var(--primary);
+            background: rgba(30, 144, 255, 0.1);
+        }
+        
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            width: 100%;
+            padding: 0.5rem;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .search-bar i {
+            color: var(--light);
+            margin-right: 8px;
+        }
+        
+        .shazam-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--light);
+            font-size: 1.2rem;
+        }
+        
+        .shazam-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: scale(1.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section pour Classements */
+        .classements-hero {
+            background: linear-gradient(135deg, rgba(30, 30, 60, 0.9), rgba(10, 10, 26, 0.95)), 
+                         url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--light);
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        
+        .classements-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 0%, var(--background) 150%);
+        }
+        
+        .classements-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 30px;
+        }
+        
+        .classements-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        
+        .classements-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+        }
+        
+        /* Charts Section */
+        .charts-section {
+            padding: 4rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--light);
+            display: inline-block;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+            z-index: 0;
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .chart-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chart-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        .chart-illustration {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .chart-illustration::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(to top, var(--card-bg), transparent);
+        }
+        
+        .chart-header {
+            background: rgba(30, 144, 255, 0.15);
+            color: var(--light);
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chart-header h3 {
+            font-size: 1.4rem;
+            margin: 0;
+            flex: 1;
+            text-align: left;
+        }
+        
+        .chart-header i {
+            transition: transform 0.3s;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .chart-content {
+            padding: 1.5rem;
+        }
+        
+        .chart-list {
+            list-style: none;
+        }
+        
+        .chart-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        
+        .chart-list li:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .chart-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .position {
+            font-weight: bold;
+            color: var(--primary);
+            width: 30px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .song-info {
+            flex: 1;
+            padding: 0 15px;
+        }
+        
+        .song-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        
+        .artist {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 4px;
+        }
+        
+        .trend {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 0.8rem;
+        }
+        
+        .trend.up {
+            color: #4CAF50; /* Vert pour montée */
+        }
+        
+        .trend.down {
+            color: #F44336; /* Rouge pour descente */
+        }
+        
+        .trend.new {
+            color: var(--primary); /* Jaune pour nouvelle entrée */
+        }
+        
+        .song-stats {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+        }
+        
+        .song-stats i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        .premium-banner {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: var(--dark);
+            padding: 1rem;
+            text-align: center;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-banner a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .premium-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+        
+        .premium-banner:hover::after {
+            transform: translateX(0);
+        }
+        
+        /* Search Results */
+        .search-results {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 500;
+        }
+        
+        .search-results.active {
+            display: block;
+        }
+        
+        .search-results h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, rgba(10, 10, 26, 0.95), var(--background));
+            color: var(--light);
+            padding: 5rem 5% 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-column h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-column a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s, padding-left 0.3s;
+            display: block;
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+            color: var(--light);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .copyright a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            nav {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background: var(--background);
+                flex-direction: column;
+                padding: 100px 2rem 2rem;
+                transition: right 0.3s;
+                z-index: 999;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .search-container {
+                width: 100%;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1000;
+            }
+            
+            .classements-hero {
+                margin-top: 70px;
+                height: 250px;
+            }
+            
+            .classements-hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .classements-hero {
+                height: 200px;
+                margin-top: 60px;
+            }
+            
+            .classements-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .classements-hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .logo div {
+                font-size: 1.5rem;
+            }
+            
+            .search-bar {
+                width: 180px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .chart-card {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .chart-card:nth-child(1) { animation-delay: 0.1s; }
+        .chart-card:nth-child(2) { animation-delay: 0.2s; }
+        .chart-card:nth-child(3) { animation-delay: 0.3s; }
+        .chart-card:nth-child(4) { animation-delay: 0.4s; }
+        .chart-card:nth-child(5) { animation-delay: 0.5s; }
+        .chart-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-music"></i>
+            <div>GRAM<span>CHARTS</span></div>
+        </div>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="classements.html" class="active">Classements</a></li>
+                <li><a href="nouveautes.html">Nouveautés</a></li>
+                <li><a href="artistes.html">Artistes</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+            </ul>
+        </nav>
+        <div class="search-container">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Rechercher un artiste, une chanson...">
+            </div>
+            <button class="shazam-btn" id="shazamBtn" title="Reconnaître une musique">
+                <i class="fas fa-music"></i>
+            </button>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Hero Section pour Classements -->
+    <section class="classements-hero">
+        <div class="classements-hero-content">
+            <h1>Tous les classements</h1>
+            <p>Découvrez les charts musicaux les plus populaires du moment, classés par genre et popularité.</p>
+        </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="charts-section">
+        <div class="section-title">
+            <h2>Classements Populaires</h2>
+        </div>
+        
+        <div class="charts-container">
+            <!-- Chart 1 -->
+            <div class="chart-card" data-genre="pop">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header">
+                    <h3>Gram Top 50 Pop Francophone globale</h3>
+                </div>
+                <div class="chart-content">
+                    <ul class="chart-list">
+                        <li>
+                            <span class="position">1</span> 
+                            <div class="song-info">
+                                <div class="song-title">Monaco <span class="trend new">Nouveau</span></div>
+                                <div class="artist">Bad Bunny</div>
+                            </div>
+                            <div class="song-stats">
+                                <i class="fas fa-play-circle"></i> 120M
+                            </div>
+                        </li>
+                        <li>
+                            <span class="position">2</span> 
+                            <div class="song-info">
+                                <div class="song-title">Flowers <span class="trend down">↓2</span></div>
+                                <div class="artist">Miley Cyrus</div>
+                            </div>
+                            <div class="song-stats">
+                                <i class="fas fa-play-circle"></i> 98M
+                            </div>
+                        </li>
+                        <li>
+                            <span class="position">3</span> 
+                            <div class="song-info">
+                                <div class="song-title">Kill Bill <span class="trend up">↑1</span></div>
+                                <div class="artist">SZA</div>
+                            </div>
+                            <div class="song-stats">
+                                <i class="fas fa-play-circle"></i> 87M
+                            </div>
+                        </li>
+                        <li>
+                            <span class="position">4</span> 
+                            <div class="song-info">
+                                <div class="song-title">Calm Down</div>
+                                <div class="artist">Rema & Selena Gomez</div>
+                            </div>
+                            <div class="song-stats">
+                                <i class="fas fa-play-circle"></i> 76M
+                            </div>
+                        </li>
+                        <li>
+                            <span class="position">5</span> 
+                            <div class="song-info">
+                                <div class="song-title">La vie en rose</div>
+                                <div class="artist">Édith Piaf</div>
+                            </div>
+                            <div class="song-stats">
+                                <i class="fas fa-play-circle"></i> 72M
+                            </div>
+                        </li>
+                        <!-- Ajout de plus de chansons pour remplir la page -->
+                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">As It Was</div><div class="artist">Harry Styles</div></div></li>
+                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">La Bachata</div><div class="artist">Manuel Turizo</div></div></li>
+                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">Anti-Hero</div><div class="artist">Taylor Swift</div></div></li>
+                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Unholy</div><div class="artist">Sam Smith & Kim Petras</div></div></li>
+                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">I'm Good (Blue)</div><div class="artist">David Guetta & Bebe Rexha</div></div></li>
+                        <li><span class="position">11</span> <div class="song-info"><div class="song-title">Dance Monkey</div><div class="artist">Tones and I</div></div></li>
+                        <li><span class="position">12</span> <div class="song-info"><div class="song-title">Blinding Lights</div><div class="artist">The Weeknd</div></div></li>
+                        <li><span class="position">13</span> <div class="song-info"><div class="song-title">Shape of You</div><div class="artist">Ed Sheeran</div></div></li>
+                        <li><span class="position">14</span> <div class="song-info"><div class="song-title">Believer</div><div class="artist">Imagine Dragons</div></div></li>
+                        <li><span class="position">15</span> <div class="song-info"><div class="song-title">Le temps des cathédrales</div><div class="artist">Bruno Pelletier</div></div></li>
+                        <li><span class="position">16</span> <div class="song-info"><div class="song-title">Je t'aime</div><div class="artist">Lara Fabian</div></div></li>
+                        <li><span class="position">17</span> <div class="song-info"><div class="song-title">Symphony</div><div class="artist">Clean Bandit ft. Zara Larsson</div></div></li>
+                        <li><span class="position">18</span> <div class="song-info"><div class="song-title">Havana</div><div class="artist">Camila Cabello</div></div></li>
+                        <li><span class="position">19</span> <div class="song-info"><div class="song-title">Someone You Loved</div><div class="artist">Lewis Capaldi</div></div></li>
+                        <li><span class="position">20</span> <div class="song-info"><div class="song-title">Perfect</div><div class="artist">Ed Sheeran</div></div></li>
+                    </ul>
+                    <div class="premium-banner">
+                        Pour découvrir le classement complet (Top 21 à 50), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chart 2 -->
+            <div class="chart-card" data-genre="new">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header">
+                    <h3>Gram Top 30 Nouvelle Génération</h3>
+                </div>
+                <div class="chart-content">
+                    <ul class="chart-list">
+                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Dance The Night</div><div class="artist">Dua Lipa</div></div></li>
+                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">TQG</div><div class="artist">KAROL G, Shakira</div></div></li>
+                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">Cupid</div><div class="artist">FIFTY FIFTY</div></div></li>
+                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">Boy's a liar Pt. 2</div><div class="artist">PinkPantheress, Ice Spice</div></div></li>
+                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">Ella Baila Sola</div><div class="artist">Eslabon Armado, Peso Pluma</div></div></li>
+                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">Karma</div><div class="artist">Taylor Swift ft. Ice Spice</div></div></li>
+                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Sprinter</div><div class="artist">Dave & Central Cee</div></div></li>
+                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">vampire</div><div class="artist">Olivia Rodrigo</div></div></li>
+                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Cruel Summer</div><div class="artist">Taylor Swift</div></div></li>
+                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">What It Is (Solo Version)</div><div class="artist">Doechii</div></div></li>
+                        <li><span class="position">11</span> <div class="song-info"><div class="song-title">Flowers</div><div class="artist">Miley Cyrus</div></div></li>
+                        <li><span class="position">12</span> <div class="song-info"><div class="song-title">Kill Bill</div><div class="artist">SZA</div></div></li>
+                        <li><span class="position">13</span> <div class="song-info"><div class="song-title">Calm Down</div><div class="artist">Rema & Selena Gomez</div></div></li>
+                        <li><span class="position">14</span> <div class="song-info"><div class="song-title">Creepin'</div><div class="artist">Metro Boomin</div></div></li>
+                        <li><span class="position">15</span> <div class="song-info"><div class="song-title">As It Was</div><div class="artist">Harry Styles</div></div></li>
+                        <li><span class="position">16</span> <div class="song-info"><div class="song-title">La Bachata</div><div class="artist">Manuel Turizo</div></div></li>
+                        <li><span class="position">17</span> <div class="song-info"><div class="song-title">Anti-Hero</div><div class="artist">Taylor Swift</div></div></li>
+                        <li><span class="position">18</span> <div class="song-info"><div class="song-title">Unholy</div><div class="artist">Sam Smith & Kim Petras</div></div></li>
+                        <li><span class="position">19</span> <div class="song-info"><div class="song-title">I'm Good (Blue)</div><div class="artist">David Guetta & Bebe Rexha</div></div></li>
+                        <li><span class="position">20</span> <div class="song-info"><div class="song-title">Monaco</div><div class="artist">Bad Bunny</div></div></li>
+                    </ul>
+                    <div class="premium-banner">
+                        Pour découvrir le classement complet (Top 21 à 30), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chart 3 -->
+            <div class="chart-card" data-genre="streaming">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1619983081563-430f63602b69?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header">
+                    <h3>Gram Top Streaming Pop Francophone</h3>
+                </div>
+                <div class="chart-content">
+                    <ul class="chart-list">
+                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Seven</div><div class="artist">Jung Kook ft. Latto</div></div></li>
+                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">Daylight</div><div class="artist">David Kushner</div></div></li>
+                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">Last Night</div><div class="artist">Morgan Wallen</div></div></li>
+                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">Fast Car</div><div class="artist">Luke Combs</div></div></li>
+                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">Fukumean</div><div class="artist">Gunna</div></div></li>
+                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">All My Life</div><div class="artist">Lil Durk ft. J. Cole</div></div></li>
+                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Barbie World</div><div class="artist">Nicki Minaj & Ice Spice</div></div></li>
+                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">Snooze</div><div class="artist">SZA</div></div></li>
+                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Popular</div><div class="artist">The Weeknd, Madonna</div></div></li>
+                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">WHERE SHE GOES</div><div class="artist">Bad Bunny</div></div></li>
+                        <li><span class="position">11</span> <div class="song-info"><div class="song-title">Flowers</div><div class="artist">Miley Cyrus</div></div></li>
+                        <li><span class="position">12</span> <div class="song-info"><div class="song-title">Kill Bill</div><div class="artist">SZA</div></div></li>
+                        <li><span class="position">13</span> <div class="song-info"><div class="song-title">Calm Down</div><div class="artist">Rema & Selena Gomez</div></div></li>
+                        <li><span class="position">14</span> <div class="song-info"><div class="song-title">Creepin'</div><div class="artist">Metro Boomin</div></div></li>
+                        <li><span class="position">15</span> <div class="song-info"><div class="song-title">As It Was</div><div class="artist">Harry Styles</div></div></li>
+                        <li><span class="position">16</span> <div class="song-info"><div class="song-title">La Bachata</div><div class="artist">Manuel Turizo</div></div></li>
+                        <li><span class="position">17</span> <div class="song-info"><div class="song-title">Anti-Hero</div><div class="artist">Taylor Swift</div></div></li>
+                        <li><span class="position">18</span> <div class="song-info"><div class="song-title">Unholy</div><div class="artist">Sam Smith & Kim Petras</div></div></li>
+                        <li><span class="position">19</span> <div class="song-info"><div class="song-title">I'm Good (Blue)</div><div class="artist">David Guetta & Bebe Rexha</div></div></li>
+                        <li><span class="position">20</span> <div class="song-info"><div class="song-title">Monaco</div><div class="artist">Bad Bunny</div></div></li>
+                    </ul>
+                    <div class="premium-banner">
+                        Pour découvrir le classement complet (Top 21 à 50), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chart 4 -->
+            <div class="chart-card" data-genre="rap">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header">
+                    <h3>Gram Top Rap 10 Francophone globale</h3>
+                </div>
+                <div class="chart-content">
+                    <ul class="chart-list">
+                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Paint The Town Red</div><div class="artist">Doja Cat</div></div></li>
+                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">fukumean</div><div class="artist">Gunna</div></div></li>
+                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">Sprinter</div><div class="artist">Dave & Central Cee</div></div></li>
+                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">SkeeYee</div><div class="artist">Sexyy Red</div></div></li>
+                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">All My Life</div><div class="artist">Lil Durk ft. J. Cole</div></div></li>
+                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">Put It On Da Floor Again</div><div class="artist">Latto ft. Cardi B</div></div></li>
+                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Just Wanna Rock</div><div class="artist">Lil Uzi Vert</div></div></li>
+                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">Peaches & Eggplants</div><div class="artist">Young Nudy ft. 21 Savage</div></div></li>
+                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Search & Rescue</div><div class="artist">Drake</div></div></li>
+                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">Private Landing</div><div class="artist">Don Toliver ft. Future</div></div></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Chart 5 -->
+            <div class="chart-card" data-genre="rnb">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1487180144351-b8472da7d491?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header">
+                    <h3>Gram Top RnB 10 Francophone globale</h3>
+                </div>
+                <div class="chart-content">
+                    <ul class="chart-list">
+                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Snooze</div><div class="artist">SZA</div></div></li>
+                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">Kill Bill</div><div class="artist">SZA</div></div></li>
+                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">CUFF IT</div><div class="artist">Beyoncé</div></div></li>
+                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">Under The Influence</div><div class="artist">Chris Brown</div></div></li>
+                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">Die For You</div><div class="artist">The Weeknd</div></div></li>
+                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">Creepin'</div><div class="artist">Metro Boomin</div></div></li>
+                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Sure Thing</div><div class="artist">Miguel</div></div></li>
+                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">ICU</div><div class="artist">Coco Jones</div></div></li>
+                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Players</div><div class="artist">Coi Leray</div></div></li>
+                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">Love Language</div><div class="artist">SZA</div></div></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Chart 6 -->
+            <div class="chart-card" data-genre="hiphop">
+                <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="chart-header">
+                    <h3>Gram Top 50 Hip-Hop/RnB Francophone</h3>
+                </div>
+                <div class="chart-content">
+                    <ul class="chart-list">
+                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Last Night</div><div class="artist">Morgan Wallen</div></div></li>
+                        <li><span class="position">2</span> <div class="song-info"><div class="song-title">Fast Car</div><div class="artist">Luke Combs</div></div></li>
+                        <li><span class="position">3</span> <div class="song-info"><div class="song-title">Need a Favor</div><div class="artist">Jelly Roll</div></div></li>
+                        <li><span class="position">4</span> <div class="song-info"><div class="song-title">Thinkin' Bout Me</div><div class="artist">Morgan Wallen</div></div></li>
+                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">Something in the Orange</div><div class="artist">Zach Bryan</div></div></li>
+                        <li><span class="position">6</span> <div class="song-info"><div class="song-title">You Proof</div><div class="artist">Morgan Wallen</div></div></li>
+                        <li><span class="position">7</span> <div class="song-info"><div class="song-title">Heart Like A Truck</div><div class="artist">Lainey Wilson</div></div></li>
+                        <li><span class="position">8</span> <div class="song-info"><div class="song-title">Thank God</div><div class="artist">Kane Brown, Katelyn Brown</div></div></li>
+                        <li><span class="position">9</span> <div class="song-info"><div class="song-title">Love You Anyway</div><div class="artist">Luke Combs</div></div></li>
+                        <li><span class="position">10</span> <div class="song-info"><div class="song-title">Dancin' In The Country</div><div class="artist">Tyler Hubbard</div></div></li>
+                        <li><span class="position">11</span> <div class="song-info"><div class="song-title">Fast Car</div><div class="artist">Luke Combs</div></div></li>
+                        <li><span class="position">12</span> <div class="song-info"><div class="song-title">Need a Favor</div><div class="artist">Jelly Roll</div></div></li>
+                        <li><span class="position">13</span> <div class="song-info"><div class="song-title">Thinkin' Bout Me</div><div class="artist">Morgan Wallen</div></div></li>
+                        <li><span class="position">14</span> <div class="song-info"><div class="song-title">Something in the Orange</div><div class="artist">Zach Bryan</div></div></li>
+                        <li><span class="position">15</span> <div class="song-info"><div class="song-title">You Proof</div><div class="artist">Morgan Wallen</div></div></li>
+                        <li><span class="position">16</span> <div class="song-info"><div class="song-title">Heart Like A Truck</div><div class="artist">Lainey Wilson</div></div></li>
+                        <li><span class="position">17</span> <div class="song-info"><div class="song-title">Thank God</div><div class="artist">Kane Brown, Katelyn Brown</div></div></li>
+                        <li><span class="position">18</span> <div class="song-info"><div class="song-title">Love You Anyway</div><div class="artist">Luke Combs</div></div></li>
+                        <li><span class="position">19</span> <div class="song-info"><div class="song-title">Dancin' In The Country</div><div class="artist">Tyler Hubbard</div></div></li>
+                        <li><span class="position">20</span> <div class="song-info"><div class="song-title">Fast Car</div><div class="artist">Luke Combs</div></div></li>
+                    </ul>
+                    <div class="premium-banner">
+                        Pour découvrir le classement complet (Top 21 à 50), <a href="https://www.patreon.com/gramcharts" target="_blank">abonnez-vous sur Patreon</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>GRAMCHARTS</h3>
+                <p>Votre source de classements musicaux francophones. Découvrez les hits du moment et les nouvelles tendances.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-spotify"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>CLASSEMENTS</h3>
+                <ul>
+                    <li><a href="classements.html">Pop Francophone</a></li>
+                    <li><a href="classements.html">Nouvelle Génération</a></li>
+                    <li><a href="classements.html">Streaming Pop</a></li>
+                    <li><a href="classements.html">Rap Francophone</a></li>
+                    <li><a href="classements.html">RnB Francophone</a></li>
+                    <li><a href="classements.html">Hip-Hop/RnB</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>À PROPOS</h3>
+                <ul>
+                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">Notre équipe</a></li>
+                    <li><a href="apropos.html">Méthodologie</a></li>
+                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">Partenaires</a></li>
+                    <li><a href="apropos.html">Carrières</a></li>
+                    <li><a href="apropos.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="support.html">FAQ</a></li>
+                    <li><a href="support.html">Devenir Premium</a></li>
+                    <li><a href="https://www.patreon.com/gramcharts" target="_blank">Patreon</a></li>
+                    <li><a href="support.html">Conditions d'utilisation</a></li>
+                    <li><a href="support.html">Politique de confidentialité</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Gramcharts. Tous droits réservés. Les classements sont mis à jour chaque semaine. Site propulsé par <a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">SOCIAL BOOST HORIZON</a>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile amélioré
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mainNav.classList.toggle('active');
+            this.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : 
+                '<i class="fas fa-bars"></i>';
+        });
+        
+        // Fermer le menu si on clique à l'extérieur
+        document.addEventListener('click', function(e) {
+            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mainNav.classList.contains('active')) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        // Fermer le menu si on clique sur un lien
+        document.querySelectorAll('#mainNav a').forEach(link => {
+            link.addEventListener('click', function() {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    </script>
+</body>
+</html>
