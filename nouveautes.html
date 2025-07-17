@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouveautés - Gramcharts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FFD700; /* Jaune */
+            --secondary: #1E90FF; /* Bleu */
+            --accent: #FF6B6B; /* Rouge */
+            --dark: #000000; /* Noir */
+            --light: #FFFFFF; /* Blanc */
+            --gray: #F5F5F5;
+            --dark-gray: #333333;
+            --background: #0A0A1A;
+            --card-bg: #121230;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(10, 10, 26, 0.95);
+            color: var(--light);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            height: 80px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        
+        .search-bar:focus-within {
+            border-color: var(--primary);
+            background: rgba(30, 144, 255, 0.1);
+        }
+        
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            width: 100%;
+            padding: 0.5rem;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .search-bar i {
+            color: var(--light);
+            margin-right: 8px;
+        }
+        
+        .shazam-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--light);
+            font-size: 1.2rem;
+        }
+        
+        .shazam-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: scale(1.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section pour Nouveautés */
+        .nouveautes-hero {
+            background: linear-gradient(135deg, rgba(30, 30, 60, 0.9), rgba(10, 10, 26, 0.95)), 
+                         url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1740&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--light);
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+        
+        .nouveautes-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 0%, var(--background) 150%);
+        }
+        
+        .nouveautes-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 30px;
+        }
+        
+        .nouveautes-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        
+        .nouveautes-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+        }
+        
+        /* Nouveautés Section */
+        .nouveautes-section {
+            padding: 4rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--light);
+            display: inline-block;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+            z-index: 0;
+        }
+        
+        .nouveautes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .nouveaute-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+        
+        .nouveaute-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        
+        .nouveaute-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .nouveaute-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .nouveaute-content {
+            padding: 1.5rem;
+        }
+        
+        .nouveaute-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+        }
+        
+        .nouveaute-artist {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .nouveaute-meta {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .nouveaute-description {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            padding: 10px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, rgba(10, 10, 26, 0.95), var(--background));
+            color: var(--light);
+            padding: 5rem 5% 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary), transparent);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-column h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-column a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s, padding-left 0.3s;
+            display: block;
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+            color: var(--light);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .copyright a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            nav {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100vh;
+                background: var(--background);
+                flex-direction: column;
+                padding: 100px 2rem 2rem;
+                transition: right 0.3s;
+                z-index: 999;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .search-container {
+                width: 100%;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                z-index: 1000;
+            }
+            
+            .nouveautes-hero {
+                margin-top: 70px;
+                height: 300px;
+            }
+            
+            .nouveautes-hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nouveautes-hero {
+                height: 250px;
+                margin-top: 60px;
+            }
+            
+            .nouveautes-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nouveautes-hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .logo div {
+                font-size: 1.5rem;
+            }
+            
+            .search-bar {
+                width: 180px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .nouveaute-card {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .nouveaute-card:nth-child(1) { animation-delay: 0.1s; }
+        .nouveaute-card:nth-child(2) { animation-delay: 0.2s; }
+        .nouveaute-card:nth-child(3) { animation-delay: 0.3s; }
+        .nouveaute-card:nth-child(4) { animation-delay: 0.4s; }
+        .nouveaute-card:nth-child(5) { animation-delay: 0.5s; }
+        .nouveaute-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--background);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-music"></i>
+            <div>GRAM<span>CHARTS</span></div>
+        </div>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="classements.html">Classements</a></li>
+                <li><a href="nouveautes.html" class="active">Nouveautés</a></li>
+                <li><a href="artistes.html">Artistes</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+            </ul>
+        </nav>
+        <div class="search-container">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Rechercher un artiste, une chanson...">
+            </div>
+            <button class="shazam-btn" id="shazamBtn" title="Reconnaître une musique">
+                <i class="fas fa-music"></i>
+            </button>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Hero Section pour Nouveautés -->
+    <section class="nouveautes-hero">
+        <div class="nouveautes-hero-content">
+            <h1>Découvrez les dernières nouveautés</h1>
+            <p>Restez à jour avec les dernières sorties musicales et les tendances émergentes de la scène francophone.</p>
+        </div>
+    </section>
+
+    <!-- Nouveautés Section -->
+    <section class="nouveautes-section">
+        <div class="section-title">
+            <h2>Sorties Récentes</h2>
+        </div>
+        
+        <div class="nouveautes-container">
+            <!-- Nouveauté 1 -->
+            <div class="nouveaute-card">
+                <div class="nouveaute-image" style="background-image: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="nouveaute-badge">Nouveau</div>
+                </div>
+                <div class="nouveaute-content">
+                    <h3>Étoiles Filantes</h3>
+                    <div class="nouveaute-artist">Clara Luna</div>
+                    <div class="nouveaute-meta">
+                        <span>Sortie: 15/09/2023</span>
+                        <span>Genre: Pop</span>
+                    </div>
+                    <p class="nouveaute-description">Le premier album solo de Clara Luna, une fusion de pop et d'électro avec des textes poétiques.</p>
+                    <a href="#" class="btn">Écouter maintenant</a>
+                </div>
+            </div>
+            
+            <!-- Nouveauté 2 -->
+            <div class="nouveaute-card">
+                <div class="nouveaute-image" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="nouveaute-badge">Single</div>
+                </div>
+                <div class="nouveaute-content">
+                    <h3>Midnight Sun</h3>
+                    <div class="nouveaute-artist">Julien Dubois</div>
+                    <div class="nouveaute-meta">
+                        <span>Sortie: 10/09/2023</span>
+                        <span>Genre: RnB</span>
+                    </div>
+                    <p class="nouveaute-description">Le nouveau single de Julien Dubois, une ballade RnB envoûtante sur les amours d'été.</p>
+                    <a href="#" class="btn">Écouter maintenant</a>
+                </div>
+            </div>
+            
+            <!-- Nouveauté 3 -->
+            <div class="nouveaute-card">
+                <div class="nouveaute-image" style="background-image: url('https://images.unsplash.com/photo-1494232410401-ad00d5433cfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="nouveaute-badge">Album</div>
+                </div>
+                <div class="nouveaute-content">
+                    <h3>Renaissance</h3>
+                    <div class="nouveaute-artist">Le Collectif</div>
+                    <div class="nouveaute-meta">
+                        <span>Sortie: 05/09/2023</span>
+                        <span>Genre: Hip-Hop</span>
+                    </div>
+                    <p class="nouveautes-description">Le troisième album du collectif de rap, mêlant flow puissant et instrumentaux jazzy.</p>
+                    <a href="#" class="btn">Écouter maintenant</a>
+                </div>
+            </div>
+            
+            <!-- Nouveauté 4 -->
+            <div class="nouveaute-card">
+                <div class="nouveaute-image" style="background-image: url('https://images.unsplash.com/photo-1487180144351-b8472da7d491?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="nouveaute-badge">EP</div>
+                </div>
+                <div class="nouveaute-content">
+                    <h3>Horizons</h3>
+                    <div class="nouveaute-artist">Sophie Martin</div>
+                    <div class="nouveaute-meta">
+                        <span>Sortie: 01/09/2023</span>
+                        <span>Genre: Électro-pop</span>
+                    </div>
+                    <p class="nouveaute-description">Un EP de 5 titres explorant les frontières entre pop et musique électronique.</p>
+                    <a href="#" class="btn">Écouter maintenant</a>
+                </div>
+            </div>
+            
+            <!-- Nouveauté 5 -->
+            <div class="nouveaute-card">
+                <div class="nouveaute-image" style="background-image: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="nouveaute-badge">Collaboration</div>
+                </div>
+                <div class="nouveaute-content">
+                    <h3>Écho</h3>
+                    <div class="nouveaute-artist">Marie Claire & Thomas Dubois</div>
+                    <div class="nouveaute-meta">
+                        <span>Sortie: 28/08/2023</span>
+                        <span>Genre: Pop/Rock</span>
+                    </div>
+                    <p class="nouveaute-description">Une collaboration inédite entre deux des plus grandes voix de la scène francophone.</p>
+                    <a href="#" class="btn">Écouter maintenant</a>
+                </div>
+            </div>
+            
+            <!-- Nouveauté 6 -->
+            <div class="nouveaute-card">
+                <div class="nouveaute-image" style="background-image: url('https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+                    <div class="nouveaute-badge">Réédition</div>
+                </div>
+                <div class="nouveaute-content">
+                    <h3>Classiques Remasterisés</h3>
+                    <div class="nouveaute-artist">Divers Artistes</div>
+                    <div class="nouveaute-meta">
+                        <span>Sortie: 25/08/2023</span>
+                        <span>Genre: Variété</span>
+                    </div>
+                    <p class="nouveaute-description">Une collection de classiques de la chanson française remasterisés pour une qualité sonore exceptionnelle.</p>
+                    <a href="#" class="btn">Écouter maintenant</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>GRAMCHARTS</h3>
+                <p>Votre source de classements musicaux francophones. Découvrez les hits du moment et les nouvelles tendances.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-spotify"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>CLASSEMENTS</h3>
+                <ul>
+                    <li><a href="classements.html">Pop Francophone</a></li>
+                    <li><a href="classements.html">Nouvelle Génération</a></li>
+                    <li><a href="classements.html">Streaming Pop</a></li>
+                    <li><a href="classements.html">Rap Francophone</a></li>
+                    <li><a href="classements.html">RnB Francophone</a></li>
+                    <li><a href="classements.html">Hip-Hop/RnB</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>À PROPOS</h3>
+                <ul>
+                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">Notre équipe</a></li>
+                    <li><a href="apropos.html">Méthodologie</a></li>
+                    <li><a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">Partenaires</a></li>
+                    <li><a href="apropos.html">Carrières</a></li>
+                    <li><a href="apropos.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>SUPPORT</h3>
+                <ul>
+                    <li><a href="support.html">FAQ</a></li>
+                    <li><a href="support.html">Devenir Premium</a></li>
+                    <li><a href="https://www.patreon.com/gramcharts" target="_blank">Patreon</a></li>
+                    <li><a href="support.html">Conditions d'utilisation</a></li>
+                    <li><a href="support.html">Politique de confidentialité</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 Gramcharts. Tous droits réservés. Les classements sont mis à jour chaque semaine. Site propulsé par <a href="https://social-boost-horizon-new-sbh.vercel.app/" target="_blank">SOCIAL BOOST HORIZON</a>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            this.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : 
+                '<i class="fas fa-bars"></i>';
+        });
+        
+        // Fermer le menu si on clique à l'extérieur
+        document.addEventListener('click', function(e) {
+            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target) && mainNav.classList.contains('active')) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    </script>
+</body>
+</html>
