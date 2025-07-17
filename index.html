@@ -46,6 +46,7 @@
             box-shadow: 0 2px 20px rgba(0,0,0,0.5);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            height: 80px; /* Hauteur fixe pour le header */
         }
         
         .logo {
@@ -161,7 +162,7 @@
             cursor: pointer;
         }
         
-        /* Hero Section */
+        /* Hero Section - Correction du problème de chevauchement */
         .hero {
             background: linear-gradient(135deg, rgba(30, 30, 60, 0.9), rgba(10, 10, 26, 0.95)), 
                          url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
@@ -177,6 +178,7 @@
             padding: 0 20px;
             position: relative;
             overflow: hidden;
+            margin-top: 80px; /* Ajout de marge pour éviter le chevauchement */
         }
         
         .hero::before {
@@ -471,7 +473,7 @@
             transform: translateX(0);
         }
         
-        /* Search Results */
+        /* Search Results - Correction de l'affichage */
         .search-results {
             background: var(--card-bg);
             border-radius: 10px;
@@ -525,6 +527,13 @@
             font-size: 0.9rem;
             color: rgba(255,255,255,0.7);
             margin-top: 4px;
+        }
+        
+        .result-chart {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            text-align: right;
+            width: 200px;
         }
         
         /* Shazam Modal */
@@ -792,6 +801,10 @@
                 z-index: 1000;
             }
             
+            .hero {
+                margin-top: 70px; /* Ajustement pour mobile */
+            }
+            
             .hero h1 {
                 font-size: 2.8rem;
             }
@@ -809,6 +822,7 @@
         @media (max-width: 600px) {
             .hero {
                 height: 400px;
+                margin-top: 60px; /* Ajustement pour petits écrans */
             }
             
             .hero h1 {
@@ -909,7 +923,7 @@
         </button>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Correction du chevauchement -->
     <section class="hero">
         <div class="hero-content">
             <h1>Découvrez les classements musicaux du moment</h1>
@@ -921,7 +935,7 @@
         </div>
     </section>
 
-    <!-- Search Results -->
+    <!-- Search Results - Correction de la recherche -->
     <div class="search-results" id="searchResults">
         <h3>Résultats de recherche</h3>
         <div id="resultsContainer"></div>
@@ -934,7 +948,7 @@
         </div>
         
         <div class="charts-container">
-            <!-- Chart 1 -->
+            <!-- Chart 1 - Ajout de chansons francophones pour la recherche -->
             <div class="chart-card" data-genre="pop">
                 <div class="chart-illustration" style="background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');"></div>
                 <div class="chart-header" onclick="toggleChart(this)">
@@ -943,11 +957,11 @@
                 </div>
                 <div class="chart-content">
                     <ul class="chart-list">
-                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Monaco</div><div class="artist">Bad Bunny</div></div></li>
+                        <li><span class="position">1</span> <div class="song-info"><div class="song-title">Je t'aime</div><div class="artist">Lara Fabian</div></div></li>
                         <li><span class="position">2</span> <div class="song-info"><div class="song-title">Flowers</div><div class="artist">Miley Cyrus</div></div></li>
                         <li><span class="position">3</span> <div class="song-info"><div class="song-title">Kill Bill</div><div class="artist">SZA</div></div></li>
                         <li><span class="position">4</span> <div class="song-info"><div class="song-title">Calm Down</div><div class="artist">Rema & Selena Gomez</div></div></li>
-                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">Creepin'</div><div class="artist">Metro Boomin</div></div></li>
+                        <li><span class="position">5</span> <div class="song-info"><div class="song-title">La vie en rose</div><div class="artist">Édith Piaf</div></div></li>
                         <li><span class="position">6</span> <div class="song-info"><div class="song-title">As It Was</div><div class="artist">Harry Styles</div></div></li>
                         <li><span class="position">7</span> <div class="song-info"><div class="song-title">La Bachata</div><div class="artist">Manuel Turizo</div></div></li>
                         <li><span class="position">8</span> <div class="song-info"><div class="song-title">Anti-Hero</div><div class="artist">Taylor Swift</div></div></li>
@@ -1186,7 +1200,7 @@
             }
         }
         
-        // Recherche fonctionnelle
+        // Recherche fonctionnelle - CORRIGÉE
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
         const resultsContainer = document.getElementById('resultsContainer');
@@ -1286,7 +1300,7 @@
         
         // Liste de chansons pour la simulation Shazam
         const songs = [
-            { title: "Monaco", artist: "Bad Bunny", cover: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { title: "Je t'aime", artist: "Lara Fabian", cover: "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
             { title: "Flowers", artist: "Miley Cyrus", cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
             { title: "Kill Bill", artist: "SZA", cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
             { title: "Calm Down", artist: "Rema & Selena Gomez", cover: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
